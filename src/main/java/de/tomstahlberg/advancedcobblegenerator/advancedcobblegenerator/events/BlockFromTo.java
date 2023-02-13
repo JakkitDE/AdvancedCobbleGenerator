@@ -57,6 +57,10 @@ public class BlockFromTo implements Listener {
                     //locMinusX.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locMinusX);
                 }
+
+
+
+
             }
         }
     }
@@ -83,6 +87,10 @@ public class BlockFromTo implements Listener {
 
 
     private void doDelayedBlockSet(Location loc){
+        if(isOnIsland(loc) == true){
+            Island island = getIsland(loc);
+            Main.plugin.getServer().broadcastMessage("oresUpgrade Level: "+getCobblerLevel(island));
+        }
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
             public void run(){
                 loc.getBlock().setType(Material.STONE);

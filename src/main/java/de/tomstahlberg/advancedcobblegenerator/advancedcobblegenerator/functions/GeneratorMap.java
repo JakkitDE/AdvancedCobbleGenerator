@@ -1,5 +1,6 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions;
 
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -9,15 +10,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GeneratorMap {
-    private HashMap<Biome, HashMap<Integer, List<Material>>> generatorMap;
-
+    private HashMap<Biome, HashMap<Integer, List<Material>>> globalGeneratorMap;
+    FileConfiguration config;
     public GeneratorMap(FileConfiguration config){
-        generatorMap = new HashMap<Biome, HashMap<Integer, List<Material>>>();
-        HashMap<Integer, List<Material>> levelList = new HashMap<Integer, List<Material>>();
+        this.config = config;
+        globalGeneratorMap = new HashMap<Biome, HashMap<Integer, List<Material>>>();
+
+        //für jedes Biom
         for(String biomeString : config.getConfigurationSection("").getKeys(false)){
             Biome biome = Biome.valueOf(biomeString);
+            HashMap<Integer, List<Material>> levelList = new HashMap<Integer, List<Material>>();
+            //für jedes Level
             for(String levelString : config.getConfigurationSection(biomeString).getKeys(false)){
                 List<Material> itemsList = new ArrayList<Material>();
+                //für jedes Material
                 for(String materialString : config.getConfigurationSection(biomeString+"."+levelString).getKeys(false)){
                     Material material = Material.valueOf(materialString);
                     Integer amount = config.getInt(biomeString+"."+levelString+"."+materialString);
@@ -28,11 +34,21 @@ public class GeneratorMap {
                 }
                 levelList.put(Integer.valueOf(levelString), itemsList);
             }
-            this.generatorMap.put(biome, levelList);
+            globalGeneratorMap.put(biome, levelList);
+
         }
+        Main.plugin.getServer().getConsoleSender().sendMessage("Es wurde geaddet: "+globalGeneratorMap);
     }
 
     public HashMap<Biome, HashMap<Integer, List<Material>>> getGeneratorMap(){
-        return this.generatorMap;
+        return this.globalGeneratorMap;
+    }
+    public Biome getDefaultBiome(){
+        String biomeString = this.config.getString("default");
+        if(Biome.valueOf(biomeString) != null){
+            return Biome.valueOf(biomeString);
+        }else{
+            return Biome.FOREST;
+        }
     }
 }

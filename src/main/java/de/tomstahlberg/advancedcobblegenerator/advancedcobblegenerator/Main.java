@@ -18,6 +18,7 @@ public final class Main extends JavaPlugin {
     public static IridiumSkyblockAPI iridiumSkyblockAPI;
 
     public static Configuration config;
+    public static Biome defaultBiome;
     public static HashMap<Biome, HashMap<Integer, List<Material>>> generatorMap = new HashMap<Biome, HashMap<Integer, List<Material>>>();
     @Override
     public void onEnable() {
@@ -34,6 +35,8 @@ public final class Main extends JavaPlugin {
         GeneratorMap genMap = new GeneratorMap(config.getConfiguration());
         generatorMap = genMap.getGeneratorMap();
         getServer().getConsoleSender().sendMessage(generatorMap.toString());
+
+        defaultBiome = genMap.getDefaultBiome();
     }
 
     @Override

@@ -15,10 +15,19 @@ public class ConfigBasedMaterial {
     public ConfigBasedMaterial(Location loc, Integer upgradeLevel){
         this.generatorMap = Main.generatorMap;
         Biome biome = loc.getBlock().getBiome();
-        HashMap<Integer, List<Material>> levelsList = this.generatorMap.get(biome);
-        List<Material> materialList = levelsList.get(upgradeLevel);
-        Integer pick = getRandomInteger(0, materialList.size() - 1);
-        this.material = materialList.get(pick);
+        if(generatorMap.containsKey(biome)){
+            HashMap<Integer, List<Material>> levelsList = this.generatorMap.get(biome);
+            List<Material> materialList = levelsList.get(upgradeLevel);
+            Integer pick = getRandomInteger(0, materialList.size() - 1);
+            this.material = materialList.get(pick);
+        }else{
+            biome = Main.defaultBiome;
+            HashMap<Integer, List<Material>> levelsList = this.generatorMap.get(biome);
+            List<Material> materialList = levelsList.get(upgradeLevel);
+            Integer pick = getRandomInteger(0, materialList.size() - 1);
+            this.material = materialList.get(pick);
+        }
+
     }
 
     public Material getMaterial (){

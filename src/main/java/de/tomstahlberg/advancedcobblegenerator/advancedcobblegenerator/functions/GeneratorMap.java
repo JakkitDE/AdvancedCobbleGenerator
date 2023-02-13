@@ -17,16 +17,18 @@ public class GeneratorMap {
         globalGeneratorMap = new HashMap<Biome, HashMap<Integer, List<Material>>>();
 
         //für jedes Biom
-        for(String biomeString : config.getConfigurationSection("").getKeys(false)){
+        for(String biomeString : config.getConfigurationSection("biomes").getKeys(false)){
+            Main.plugin.getServer().getConsoleSender().sendMessage("Biom ist "+biomeString);
             Biome biome = Biome.valueOf(biomeString);
+
             HashMap<Integer, List<Material>> levelList = new HashMap<Integer, List<Material>>();
             //für jedes Level
-            for(String levelString : config.getConfigurationSection(biomeString).getKeys(false)){
+            for(String levelString : config.getConfigurationSection("biomes."+biomeString).getKeys(false)){
                 List<Material> itemsList = new ArrayList<Material>();
                 //für jedes Material
-                for(String materialString : config.getConfigurationSection(biomeString+"."+levelString).getKeys(false)){
+                for(String materialString : config.getConfigurationSection("biomes."+biomeString+"."+levelString).getKeys(false)){
                     Material material = Material.valueOf(materialString);
-                    Integer amount = config.getInt(biomeString+"."+levelString+"."+materialString);
+                    Integer amount = config.getInt("biomes."+biomeString+"."+levelString+"."+materialString);
 
                     for(int i = 0;i<amount;i++){
                         itemsList.add(material);

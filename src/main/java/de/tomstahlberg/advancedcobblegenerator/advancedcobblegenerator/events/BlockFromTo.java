@@ -1,7 +1,8 @@
-package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator;
+package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import com.iridium.iridiumskyblock.database.Island;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

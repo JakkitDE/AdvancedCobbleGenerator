@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -68,12 +69,14 @@ public class BlockFromTo implements Listener {
             public void run(){
                 loc.getBlock().setType(Material.STONE);
             }
-            IridiumSkyblockAPI api = IridiumSkyblockAPI.getInstance();
-            Optional<Island> is = api.getIslandViaLocation(loc);
+            IridiumSkyblockAPI api = Main.iridiumSkyblockAPI;
+            Optional<Island> island = api.getIslandViaLocation(loc);
 
 
 
 
-        }, 20);
+
+
+        }, 10);
     }
 }

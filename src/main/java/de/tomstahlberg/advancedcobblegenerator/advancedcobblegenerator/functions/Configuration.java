@@ -1,6 +1,9 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions;
 
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -54,6 +57,19 @@ public class Configuration {
     }
     public FileConfiguration getSettingsConfiguration(){
         return this.settingsConfiguration;
+    }
+    public List<World> getWorlds(){
+        List<World> worldList = new ArrayList<World>();
+        List<String> worldListStrings = (List<String>) this.settingsConfiguration.getList("worlds");
+        for(String worldString : worldListStrings){
+            try{
+                worldList.add(Main.plugin.getServer().getWorld(worldString));
+                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e"+worldString+"&a Welt registriert."));
+            }catch(Exception e){
+                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e"+worldString+"&c ist keine gültige Welt."));
+            }
+        }
+        return worldList;
     }
     private void setupConfiguration(FileConfiguration configuration, String configCategory) throws IOException {
         if(configCategory.equalsIgnoreCase("generator")){

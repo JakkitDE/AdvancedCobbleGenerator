@@ -29,6 +29,11 @@ public class commands implements CommandExecutor {
                     Main.settings = Main.configurator.getSettingsConfiguration();
 
                     Main.defaultBiome = genMap.getDefaultBiome();
+
+                    Main.worldList = Main.configurator.getWorlds();
+
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &aDie Konfigurationsdateien wurden neu geladen."));
+
                 }else{
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cBenutze /acg reload."));
                 }

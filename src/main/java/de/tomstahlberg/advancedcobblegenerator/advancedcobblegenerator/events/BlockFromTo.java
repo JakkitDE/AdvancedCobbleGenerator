@@ -88,6 +88,7 @@ public class BlockFromTo implements Listener {
 
 
     private void doDelayedBlockSet(Location loc){
+
         if(isOnIsland(loc) == true){
             Island island = getIsland(loc);
             ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));

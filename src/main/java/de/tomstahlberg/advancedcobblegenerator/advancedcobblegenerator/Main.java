@@ -5,6 +5,7 @@ import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.Bl
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configuration;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -22,6 +23,7 @@ public final class Main extends JavaPlugin {
     public static FileConfiguration settings;
     public static Biome defaultBiome;
     public static HashMap<Biome, HashMap<Integer, List<Material>>> generatorMap = new HashMap<Biome, HashMap<Integer, List<Material>>>();
+    public static List<World> worldList;
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -40,7 +42,7 @@ public final class Main extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(generatorMap.toString());
 
         settings = configurator.getSettingsConfiguration();
-
+        worldList = configurator.getWorlds();
         defaultBiome = genMap.getDefaultBiome();
     }
 

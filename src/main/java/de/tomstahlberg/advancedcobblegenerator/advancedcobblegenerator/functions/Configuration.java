@@ -32,8 +32,12 @@ public class Configuration {
         return this.configuration;
     }
     private void setupConfiguration(FileConfiguration configuration) throws IOException {
-        configuration.set("FOREST.1.STONE", 80);
-        configuration.set("FOREST.1.COBBLESTONE", 40);
+        configuration.set("FOREST.1.STONE", 31);
+        configuration.set("FOREST.1.COBBLESTONE", 31);
+        configuration.set("FOREST.1.COAL_ORE", 17);
+        configuration.set("FOREST.1.IRON_ORE", 12);
+        configuration.set("FOREST.1.GOLD_ORE", 7);
+        configuration.set("FOREST.1.DIAMOND_ORE", 2);
         configuration.save(this.file);
     }
 }

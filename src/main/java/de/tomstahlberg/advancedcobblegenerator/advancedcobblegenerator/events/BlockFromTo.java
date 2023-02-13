@@ -90,7 +90,6 @@ public class BlockFromTo implements Listener {
     private void doDelayedBlockSet(Location loc){
         if(isOnIsland(loc) == true){
             Island island = getIsland(loc);
-            Main.plugin.getServer().broadcastMessage("oresUpgrade Level: "+getCobblerLevel(island));
             ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));
             Material material = configBasedMaterial.getMaterial();
 

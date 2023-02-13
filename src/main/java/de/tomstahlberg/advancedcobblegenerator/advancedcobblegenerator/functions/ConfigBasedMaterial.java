@@ -1,5 +1,6 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions;
 
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -12,13 +13,14 @@ public class ConfigBasedMaterial {
     private HashMap<Biome, HashMap<Integer, List<Material>>> generatorMap;
     private Material material;
     public ConfigBasedMaterial(Location loc, Integer upgradeLevel){
+        this.generatorMap = Main.generatorMap;
         Biome biome = loc.getBlock().getBiome();
-        HashMap<Integer, List<Material>> levelsList = generatorMap.get(biome);
+        HashMap<Integer, List<Material>> levelsList = this.generatorMap.get(biome);
         List<Material> materialList = levelsList.get(upgradeLevel);
         Integer pick = getRandomInteger(0, materialList.size() - 1);
         this.material = materialList.get(pick);
     }
-    
+
     public Material getMaterial (){
         return this.material;
     }

@@ -33,6 +33,7 @@ public final class Main extends JavaPlugin {
         }
         GeneratorMap genMap = new GeneratorMap(config.getConfiguration());
         generatorMap = genMap.getGeneratorMap();
+        getServer().getConsoleSender().sendMessage(generatorMap.toString());
     }
 
     @Override

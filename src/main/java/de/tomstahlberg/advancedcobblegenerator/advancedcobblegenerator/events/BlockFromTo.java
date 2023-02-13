@@ -88,17 +88,19 @@ public class BlockFromTo implements Listener {
 
 
     private void doDelayedBlockSet(Location loc){
-
-        if(isOnIsland(loc) == true){
+        if(Main.worldList.contains(loc.getWorld())){
+          if(isOnIsland(loc) == true){
             Island island = getIsland(loc);
             ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));
             Material material = configBasedMaterial.getMaterial();
 
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                public void run(){
-                    loc.getBlock().setType(material);
-                }
-            }, 10);
+                   public void run(){
+                       loc.getBlock().setType(material);
+                  }
+                 }, 10);
+            }
         }
+
     }
 }

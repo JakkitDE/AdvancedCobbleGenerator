@@ -2,6 +2,7 @@ package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import com.iridium.iridiumskyblock.database.Island;
+import com.iridium.iridiumskyblock.database.IslandUpgrade;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -56,12 +57,29 @@ public class BlockFromTo implements Listener {
                     //locMinusX.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locMinusX);
                 }
-
             }
         }
     }
 
+    private Boolean isOnIsland(Location loc){
+        IridiumSkyblockAPI api = Main.iridiumSkyblockAPI;
+        Optional<Island> island = api.getIslandViaLocation(loc);
+        if(island == null || !(island.isPresent())){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
+    private Island getIsland (Location loc){
+        IridiumSkyblockAPI api = Main.iridiumSkyblockAPI;
+        Optional<Island> island = api.getIslandViaLocation(loc);
+        return island.get();
+    }
+
+    private int getCobblerLevel (Island island){
+        return Main.iridiumSkyblockAPI.getIslandUpgrade(island, "oresUpgrade").getLevel();
+    }
 
 
     private void doDelayedBlockSet(Location loc){
@@ -69,14 +87,6 @@ public class BlockFromTo implements Listener {
             public void run(){
                 loc.getBlock().setType(Material.STONE);
             }
-            IridiumSkyblockAPI api = Main.iridiumSkyblockAPI;
-            Optional<Island> island = api.getIslandViaLocation(loc);
-
-
-
-
-
-
         }, 10);
     }
 }

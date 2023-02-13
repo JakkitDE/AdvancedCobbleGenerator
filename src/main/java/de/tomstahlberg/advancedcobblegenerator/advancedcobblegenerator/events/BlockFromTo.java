@@ -4,6 +4,7 @@ import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import com.iridium.iridiumskyblock.database.Island;
 import com.iridium.iridiumskyblock.database.IslandUpgrade;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.ConfigBasedMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -90,11 +91,14 @@ public class BlockFromTo implements Listener {
         if(isOnIsland(loc) == true){
             Island island = getIsland(loc);
             Main.plugin.getServer().broadcastMessage("oresUpgrade Level: "+getCobblerLevel(island));
+            ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));
+            Material material = configBasedMaterial.getMaterial();
+
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+                public void run(){
+                    loc.getBlock().setType(material);
+                }
+            }, 10);
         }
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-            public void run(){
-                loc.getBlock().setType(Material.STONE);
-            }
-        }, 10);
     }
 }

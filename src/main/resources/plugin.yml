@@ -2,7 +2,7 @@ name: Advancedcobblegenerator
 version: '${project.version}'
 main: de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main
 api-version: 1.19
-depend: [IridiumSkyblock]
+depend: [IridiumSkyblock, Vault]
 commands:
   advancedcobblegenerator:
     description: 'command for reloading purposes'

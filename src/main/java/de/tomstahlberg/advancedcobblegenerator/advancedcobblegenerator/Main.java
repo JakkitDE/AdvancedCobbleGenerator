@@ -6,6 +6,7 @@ import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.Bl
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.PlayerJoin;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,7 +14,9 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -35,8 +38,10 @@ public final class Main extends JavaPlugin {
     public static List<World> worldList;
 
     public static HashMap<Location, Player> cobblerBlocksBroken = new HashMap<Location, Player>();
-
+    public static List<Inventory> upgradeInventoryList = new ArrayList<Inventory>();
     public static Boolean iridiumHook;
+
+    public static Economy econ = null;
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -46,7 +51,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
-        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aCobble Gen wird gestartet."));
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting."));
         try {
             configurator = new Configurator();
         } catch (IOException e) {
@@ -60,14 +65,38 @@ public final class Main extends JavaPlugin {
         defaultBiome = genMap.getDefaultBiome();
         iridiumHook = configurator.getIridiumHook();
         playerdata = configurator.loadPlayerData();
-        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aCobble Gen gestartet."));
+
+        if (!setupEconomy() ) {
+            getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &cStopped, due to not having an economy plugin installed."));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fRegistered Vault successfully."));
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fSuccessfully started."));
+        getServer().getConsoleSender().sendMessage("IridiumHook "+iridiumHook);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        configurator.savePlayerData(playerdata);
-        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&cCobble Gen gestoppt."));
+        try {
+            configurator.savePlayerData(playerdata);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aACG &e-> &cSuccesfully stopped."));
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
     }
 
 }

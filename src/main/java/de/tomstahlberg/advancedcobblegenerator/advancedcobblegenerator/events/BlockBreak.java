@@ -16,6 +16,5 @@ public class BlockBreak implements Listener {
                 Main.cobblerBlocksBroken.put(event.getBlock().getLocation(), event.getPlayer());
             }
         }
-
     }
 }

@@ -112,9 +112,9 @@ public class Configurator {
         for(String worldString : worldListStrings){
             try{
                 worldList.add(Main.plugin.getServer().getWorld(worldString));
-                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e"+worldString+"&a Welt registriert."));
+                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aACG &e-> &fWelt &5"+worldString+" &f successfully loaded."));
             }catch(Exception e){
-                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e"+worldString+"&c ist keine gültige Welt."));
+                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aACG &e-> &fWelt &5"+worldString+" &f failed loading due to not existing."));
             }
         }
         return worldList;
@@ -155,9 +155,10 @@ public class Configurator {
             List<String> lore = new ArrayList<String>();
             lore.add("&aPrice: &6&l500 &e&l$");
             configuration.set("2.lore",lore);
-            configuration.set("2.price","500.0");
+            configuration.set("2.price",500.0);
+            configuration.save(this.upgradesFile);
         } else if (configCategory.equalsIgnoreCase("playerdata")) {
-
+            configuration.save(this.playerdataFile);
         }
     }
     public Boolean getIridiumHook(){
@@ -171,10 +172,11 @@ public class Configurator {
         }
         return playerdata;
     }
-    public void savePlayerData(HashMap<UUID, Integer> playerdata){
+    public void savePlayerData(HashMap<UUID, Integer> playerdata) throws IOException {
         FileConfiguration playerdataConfig = new YamlConfiguration();
         for(UUID uuid : playerdata.keySet()){
             playerdataConfig.set(uuid.toString(), playerdata.get(uuid));
         }
+        playerdataConfig.save(playerdataFile);
     }
 }

@@ -36,7 +36,7 @@ public class InventoryClick implements Listener {
     }
     private void doUpgrade(Player player){
         if(isMaximumLevel(player)){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&lGolden&3&lSky &8x &cDu hast bereits das maximale Level erreicht."));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',Main.language.getString("prefix")+Main.language.getString("maximum_level_already_reached")));
         }else{
             Double playerBalance = Main.econ.getBalance(player);
             Double upgradePrice = getUpgradePrice(player);
@@ -44,10 +44,11 @@ public class InventoryClick implements Listener {
                 Main.econ.withdrawPlayer(player, upgradePrice);
                 Integer newLevel = getCurrentCobblerLevel(player)+1;
                 Main.playerdata.put(player.getUniqueId(), newLevel);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &aDu hast deinen Cobbler aufgelevelt."));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("upgrade_successfull")));
                 player.closeInventory();
             }else{
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cDu hast nicht genug Geld."));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("not_enough_money_for_upgrade")));
+                player.closeInventory();
             }
         }
     }

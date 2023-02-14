@@ -162,11 +162,32 @@ public class Configurator {
             configuration.save(this.generatorFile);
         } else if (configCategory.equalsIgnoreCase("settings")) {
             List<String> listOfWorldNames = new ArrayList<String>();
+            List<String> comments = new ArrayList<String>();
+            comments.add("In which worlds you want to enable the plugin?");
+            configuration.setComments("",comments);
             listOfWorldNames.add("world");
             configuration.set("worlds", listOfWorldNames);
 
+            comments.clear();
+            comments.add("Every xx ticks to spawn a new block in the cobble generator..");
+            comments.add("20 ticks = 1 second.");
+            configuration.setComments("",comments);
             configuration.set("ticksPerBlockSet", 10);
+
+
             configuration.set("hook_iridiumskyblock", false);
+            comments.clear();
+            comments.add("For cobble_generator_sound and cobble_generator_effect");
+            comments.add("you can set NONE to remove sound and/or effect. Use upper case only.");
+            configuration.setComments("",comments);
+            configuration.set("cobble_generator_sound", "BLOCK_LAVA_EXTINGUISH");
+            configuration.set("cobble_generator_effect", "SMOKE");
+
+            comments.clear();
+            comments.add("Do not use AIR as placeholder, otherwise the inventory works like a one-way disposal.");
+            configuration.setComments("",comments);
+            configuration.set("cobble_generator_upgrade_material", "GRASS_BLOCK");
+            configuration.set("cobble_generator_upgrade_placeholder_material", "GRAY_STAINED_GLASS_PANE");
 
             configuration.save(this.settingsFile);
         } else if (configCategory.equalsIgnoreCase("upgrades")) {
@@ -221,6 +242,9 @@ public class Configurator {
             upgradeItemLoreMaxed.add("&7You already have reached the maximum level.");
             configuration.set("upgrade_item_lore_maxed", upgradeItemLoreMaxed);
 
+            configuration.set("maximum_level_already_reached", "&cYou already have reached the maximum level.");
+            configuration.set("not_enough_money_for_upgrade", "&cYou can't afford that.");
+            configuration.set("upgrade_successfull", "&aYou successfully upgraded your cobble generator.");
 
 
             configuration.save(this.languageFile);

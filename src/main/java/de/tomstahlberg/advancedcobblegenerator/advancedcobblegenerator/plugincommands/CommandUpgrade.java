@@ -36,7 +36,7 @@ public class CommandUpgrade {
 
     }
     private Inventory fillInventory(Inventory inventory, Player player){
-        ItemStack itemStack = new ItemStack(Material.GRASS_BLOCK);
+        ItemStack itemStack = new ItemStack(Material.valueOf(Main.settings.getString("cobble_generator_upgrade_material")));
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',Main.language.getString("prefix")+Main.language.getString("upgrade_item_title")));
         List<String> lore = new ArrayList<String>();
@@ -70,7 +70,7 @@ public class CommandUpgrade {
         return Main.playerdata.get(player.getUniqueId());
     }
     private void setPlaceHolder(Inventory inventory, Integer slot){
-        ItemStack itemStack = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemStack itemStack = new ItemStack(Material.valueOf(Main.settings.getString("cobble_generator_upgrade_placeholder_material")));
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&'," "));
         itemStack.setItemMeta(itemMeta);

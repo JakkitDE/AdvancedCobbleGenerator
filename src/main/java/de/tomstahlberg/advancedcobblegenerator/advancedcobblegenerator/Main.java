@@ -39,7 +39,6 @@ public final class Main extends JavaPlugin {
         }
         GeneratorMap genMap = new GeneratorMap(configurator.getGeneratorConfiguration());
         generatorMap = genMap.getGeneratorMap();
-        getServer().getConsoleSender().sendMessage(generatorMap.toString());
 
         settings = configurator.getSettingsConfiguration();
         worldList = configurator.getWorlds();

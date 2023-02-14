@@ -97,6 +97,9 @@ public class Configuration {
             List<String> listOfWorldNames = new ArrayList<String>();
             listOfWorldNames.add("world");
             configuration.set("worlds", listOfWorldNames);
+
+            configuration.set("ticksPerBlockSet", 10);
+
             configuration.save(this.settingsFile);
         }
     }

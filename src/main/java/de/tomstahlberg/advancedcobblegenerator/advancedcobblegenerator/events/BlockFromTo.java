@@ -20,8 +20,7 @@ public class BlockFromTo implements Listener {
     @EventHandler
     public void onBlockFromTo(BlockFromToEvent event){
         if (event.getBlock().getType() == Material.WATER){
-            if(event.getBlock().getLocation().distance(Main.plugin.getServer().getPlayer("Kadnick").getLocation()) <= 5){
-                Player player = Main.plugin.getServer().getPlayer("Kadnick");
+            if(Main.worldList.contains(event.getBlock().getLocation().getWorld())){
 
                 Location locPlusZ = new Location(event.getToBlock().getWorld(), event.getToBlock().getX(), event.getToBlock().getY(), event.getToBlock().getZ());
                 locPlusZ.setZ(locPlusZ.getZ()+1.0);
@@ -58,10 +57,6 @@ public class BlockFromTo implements Listener {
                     //locMinusX.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locMinusX);
                 }
-
-
-
-
             }
         }
     }
@@ -83,24 +78,20 @@ public class BlockFromTo implements Listener {
     }
 
     private int getCobblerLevel (Island island){
-        return Main.iridiumSkyblockAPI.getIslandUpgrade(island, "oresUpgrade").getLevel();
+        return Main.iridiumSkyblockAPI.getIslandUpgrade(island, "generator").getLevel();
     }
 
 
     private void doDelayedBlockSet(Location loc){
-        if(Main.worldList.contains(loc.getWorld())){
-          if(isOnIsland(loc) == true){
+        if(isOnIsland(loc) == true){
             Island island = getIsland(loc);
             ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));
             Material material = configBasedMaterial.getMaterial();
-
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                   public void run(){
-                       loc.getBlock().setType(material);
-                  }
-                 }, 10);
-            }
+                public void run(){
+                    loc.getBlock().setType(material);
+                }
+            }, Main.settings.getInt("ticksPerBlockSet"));
         }
-
     }
 }

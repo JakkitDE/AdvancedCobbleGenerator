@@ -39,7 +39,6 @@ public class GeneratorMap {
             globalGeneratorMap.put(biome, levelList);
 
         }
-        Main.plugin.getServer().getConsoleSender().sendMessage("Es wurde geaddet: "+globalGeneratorMap);
     }
 
     public HashMap<Biome, HashMap<Integer, List<Material>>> getGeneratorMap(){

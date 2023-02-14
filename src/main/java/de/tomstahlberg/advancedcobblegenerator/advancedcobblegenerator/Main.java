@@ -31,7 +31,7 @@ public final class Main extends JavaPlugin {
         iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
         getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
-        getServer().getConsoleSender().sendMessage("§aCobbleGen gestartet.");
+        getServer().getConsoleSender().sendMessage("§aCobbleGen wird gestartet.");
         try {
             configurator = new Configuration();
         } catch (IOException e) {
@@ -43,6 +43,8 @@ public final class Main extends JavaPlugin {
         settings = configurator.getSettingsConfiguration();
         worldList = configurator.getWorlds();
         defaultBiome = genMap.getDefaultBiome();
+
+        getServer().getConsoleSender().sendMessage("§aCobbleGen gestartet.");
     }
 
     @Override

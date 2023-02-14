@@ -18,7 +18,6 @@ public class GeneratorMap {
 
         //für jedes Biom
         for(String biomeString : config.getConfigurationSection("biomes").getKeys(false)){
-            Main.plugin.getServer().getConsoleSender().sendMessage("Biom ist "+biomeString);
             Biome biome = Biome.valueOf(biomeString);
 
             HashMap<Integer, List<Material>> levelList = new HashMap<Integer, List<Material>>();

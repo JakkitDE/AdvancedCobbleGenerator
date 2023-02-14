@@ -24,7 +24,6 @@ public class commands implements CommandExecutor {
                     }
                     GeneratorMap genMap = new GeneratorMap(Main.configurator.getGeneratorConfiguration());
                     Main.generatorMap = genMap.getGeneratorMap();
-                    Main.plugin.getServer().getConsoleSender().sendMessage(Main.generatorMap.toString());
 
                     Main.settings = Main.configurator.getSettingsConfiguration();
 

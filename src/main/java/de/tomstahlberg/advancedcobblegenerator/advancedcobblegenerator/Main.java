@@ -3,6 +3,7 @@ package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.BlockBreak;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.BlockFromTo;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.InventoryClick;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.PlayerJoin;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
@@ -50,6 +51,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting."));
         try {

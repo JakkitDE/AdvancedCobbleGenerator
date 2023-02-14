@@ -112,9 +112,9 @@ public class Configurator {
         for(String worldString : worldListStrings){
             try{
                 worldList.add(Main.plugin.getServer().getWorld(worldString));
-                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aACG &e-> &fWelt &5"+worldString+" &f successfully loaded."));
+                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aACG &e-> &fWorld &5"+worldString+" &f successfully loaded."));
             }catch(Exception e){
-                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aACG &e-> &fWelt &5"+worldString+" &f failed loading due to not existing."));
+                Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&aACG &e-> &fWorld &5"+worldString+" &f failed loading due to not existing."));
             }
         }
         return worldList;

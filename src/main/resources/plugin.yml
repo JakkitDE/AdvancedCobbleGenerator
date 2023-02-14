@@ -3,6 +3,7 @@ version: '${project.version}'
 main: de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main
 api-version: 1.19
 depend: [IridiumSkyblock, Vault]
+softdepend: [Essentials, ServerSystem]
 commands:
   advancedcobblegenerator:
     description: 'command for reloading purposes'

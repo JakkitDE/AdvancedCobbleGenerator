@@ -1,4 +1,4 @@
-package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator;
+package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.plugincommands;
 
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;

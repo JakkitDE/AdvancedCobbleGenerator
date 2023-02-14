@@ -7,6 +7,7 @@ import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.In
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.PlayerJoin;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.plugincommands.commands;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

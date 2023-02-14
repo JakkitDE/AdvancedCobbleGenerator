@@ -21,32 +21,34 @@ public class CommandUpgrade {
     public CommandUpgrade(CommandSender sender){
         if(sender instanceof Player){
             if(Main.iridiumHook == true){
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cBitte verwende &e/is upgrade&c."));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("upgraded_but_iridium_hook")));
             }else{
                 Player player = (Player) sender;
-                Inventory inventory = Bukkit.createInventory(player, 9, ChatColor.translateAlternateColorCodes('&',"&5&lUpgrades"));
+                Inventory inventory = Bukkit.createInventory(player, 9, ChatColor.translateAlternateColorCodes('&',Main.language.getString("prefix")+Main.language.getString("upgrade_inventory_title")));
                 fillInventory(inventory, player);
                 player.openInventory(inventory);
                 Main.upgradeInventoryList.add(inventory);
             }
 
         }else{
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cDer Upgrade Befehl kann nur von einem Spieler ausgeführt werden."));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("command_executor_must_be_player")));
         }
 
     }
     private Inventory fillInventory(Inventory inventory, Player player){
         ItemStack itemStack = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',"&e&lInfo"));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',Main.language.getString("prefix")+Main.language.getString("upgrade_item_title")));
         List<String> lore = new ArrayList<String>();
         if(isMaximumLevel(player)){
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&7Aktuelles Level: &a%current_cobbler_level%"));
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&6&lMaximales Level erreicht."));
+            for(String loreLine : Main.language.getStringList("upgrade_item_lore_maxed")){
+                lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+            }
             lore = replaceLorePlaceholder(lore, player);
         }else{
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&7Aktuelles Level: &a%current_cobbler_level%"));
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&7Upgrade Preis: &a%upgrade_price% &2$"));
+            for(String loreLine : Main.language.getStringList("upgrade_item_lore_upgradable")){
+                lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+            }
             lore = replaceLorePlaceholder(lore, player);
         }
         itemMeta.setLore(lore);

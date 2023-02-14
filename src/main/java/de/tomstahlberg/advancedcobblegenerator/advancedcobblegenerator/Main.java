@@ -44,6 +44,8 @@ public final class Main extends JavaPlugin {
     public static Boolean iridiumHook;
 
     public static Economy econ = null;
+
+    public static FileConfiguration language;
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -75,6 +77,7 @@ public final class Main extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        language = configurator.getLanguageConfiguration();
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fRegistered Vault successfully."));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fSuccessfully started."));
         getServer().getConsoleSender().sendMessage("IridiumHook "+iridiumHook);

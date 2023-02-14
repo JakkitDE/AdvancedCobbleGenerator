@@ -1,5 +1,6 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.plugincommands;
 
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.plugincommands.CommandReload;
@@ -26,22 +27,34 @@ public class commands implements CommandExecutor, TabCompleter {
                     if(sender.hasPermission("advancedcobblegenerator.admin") || sender.isOp()){
                         new CommandReload(sender);
                     }else{
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cKeine Rechte."));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix") + Main.language.getString("no_permissions_admin")));
                     }
                 }else if (args[0].equalsIgnoreCase("upgrade")){
                     if(sender.hasPermission("advancedcobblegenerator.upgrade") || sender.isOp()){
                         new CommandUpgrade(sender);
                     }else{
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cKeine Rechte."));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix") + Main.language.getString("no_permissions_upgrade")));
+                    }
+                }else if (args[0].equalsIgnoreCase("help")){
+                    if(sender.hasPermission("advancedcobblegenerator.admin") || sender.isOp()){
+                        List<String> help_menu = Main.language.getStringList("help_menu_admins");
+                        for(String line : help_menu){
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',line));
+                        }
+                    }else{
+                        List<String> help_menu = Main.language.getStringList("help_menu_players");
+                        for(String line : help_menu){
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',line));
+                        }
                     }
                 }else{
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cBenutze /acg reload."));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix") + Main.language.getString("wrong_usage")));
                 }
             }else{
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cBenutze /acg reload."));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix") + Main.language.getString("wrong_usage")));
             }
         }else{
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cKeine Rechte."));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix") + Main.language.getString("no_permissions_usage")));
 
         }
 
@@ -55,6 +68,7 @@ public class commands implements CommandExecutor, TabCompleter {
         if(args.length == 1){
             if(sender.hasPermission("advancedcobblegenerator.upgrade") || sender.isOp()){
                 arguments.add("upgrade");
+                arguments.add("help");
             }
             if(sender.hasPermission("advancedcobblegenerator.admin") || sender.isOp()){
                 arguments.add("reload");

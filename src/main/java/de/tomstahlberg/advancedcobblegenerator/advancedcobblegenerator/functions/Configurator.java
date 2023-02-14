@@ -26,6 +26,9 @@ public class Configurator {
     File playerdataFile;
     FileConfiguration playerdataConfiguration;
 
+    File languageFile;
+    FileConfiguration languageConfiguration;
+
 
     public Configurator() throws IOException {
         this.generatorFile = new File(Main.plugin.getDataFolder(), "generator.yml");
@@ -60,6 +63,14 @@ public class Configurator {
             this.playerdataConfiguration = YamlConfiguration.loadConfiguration(playerdataFile);
         }
 
+        this.languageFile = new File(Main.plugin.getDataFolder(), "language.yml");
+        if(!(languageFileExists())){
+            this.languageConfiguration = new YamlConfiguration();
+            setupConfiguration(this.languageConfiguration, "language");
+        }else{
+            this.languageConfiguration = YamlConfiguration.loadConfiguration(languageFile);
+        }
+
     }
 
     private boolean configurationFileExists(){
@@ -88,6 +99,14 @@ public class Configurator {
 
     private boolean playerdataFileExists(){
         if(this.playerdataFile.exists()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean languageFileExists(){
+        if(this.languageFile.exists()){
             return true;
         }else{
             return false;
@@ -159,7 +178,56 @@ public class Configurator {
             configuration.save(this.upgradesFile);
         } else if (configCategory.equalsIgnoreCase("playerdata")) {
             configuration.save(this.playerdataFile);
+        } else if (configCategory.equalsIgnoreCase("language")) {
+            configuration.set("prefix", "&f[&e&lACG&f] &7> ");
+            configuration.set("no_permissions_usage", "&cSorry, but you do not have permissions to use this command.");
+            configuration.set("no_permissions_admin", "&cSorry, but you do not have permissions to administrate that.");
+            configuration.set("no_permissions_upgrade", "&cSorry, but you do not have permissions to upgrade.");
+            List<String> helpListPlayer = new ArrayList<String>();
+            helpListPlayer.add("&f---------------");
+            helpListPlayer.add("&3&lAdvanced Cobble Generator");
+            helpListPlayer.add("");
+            helpListPlayer.add("&e/acg upgrade &7to upgrade your cobble generator.");
+            helpListPlayer.add("Plugin made by Tom | Kadnick");
+            helpListPlayer.add("&f---------------");
+            configuration.set("help_menu_players", helpListPlayer);
+
+            List<String> helpListAdmins = new ArrayList<String>();
+            helpListAdmins.add("&f---------------");
+            helpListAdmins.add("&3&lAdvanced Cobble Generator");
+            helpListAdmins.add("");
+            helpListAdmins.add("&e/acg upgrade &7to upgrade your cobble generator.");
+            helpListAdmins.add("&e/acg reload &7to reload acg.");
+            helpListAdmins.add("Plugin made by Tom | Kadnick");
+            helpListAdmins.add("&f---------------");
+            configuration.set("help_menu_admins", helpListAdmins);
+
+            configuration.set("wrong_usage","&cWrong usage. Please type &e/cobble help &cfor more informations.");
+            configuration.set("reload_successfull", "&aSuccessfully reloaded &eACG&a.");
+            configuration.set("upgraded_but_iridium_hook", "&cPlease use &e/is upgrade &cto upgrade you cobble generator.");
+
+            configuration.set("upgrade_inventory_title", "&5Upgrade Panel");
+            configuration.set("command_executor_must_be_player", "&cOnly players can run that command.");
+
+            configuration.set("upgrade_item_title", "&e&lInfo");
+
+            List<String> upgradeItemLoreUpgradable = new ArrayList<String>();
+            upgradeItemLoreUpgradable.add("&7Current level: &a%current_cobbler_level%");
+            upgradeItemLoreUpgradable.add("&7Upgrade Price: &a%upgrade_price% &2$");
+            configuration.set("upgrade_item_lore_upgradable", upgradeItemLoreUpgradable);
+
+            List<String> upgradeItemLoreMaxed = new ArrayList<String>();
+            upgradeItemLoreMaxed.add("&7Current level: &a%current_cobbler_level%");
+            upgradeItemLoreMaxed.add("&7You already have reached the maximum level.");
+            configuration.set("upgrade_item_lore_maxed", upgradeItemLoreMaxed);
+
+
+
+            configuration.save(this.languageFile);
         }
+    }
+    public FileConfiguration getLanguageConfiguration(){
+        return this.languageConfiguration;
     }
     public Boolean getIridiumHook(){
         return this.settingsConfiguration.getBoolean("hook_iridiumskyblock");

@@ -29,7 +29,9 @@ public class CommandReload {
 
         Main.playerdata = Main.configurator.loadPlayerData();
 
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &aDie Konfigurationsdateien wurden neu geladen."));
+        Main.language = Main.configurator.getLanguageConfiguration();
+
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("reload_successfull")));
 
     }
 }

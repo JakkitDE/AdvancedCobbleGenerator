@@ -10,7 +10,8 @@ import org.bukkit.entity.Player;
 import java.io.IOException;
 
 public class CommandReload {
-    public CommandReload(CommandSender sender){
+    public CommandReload(CommandSender sender) throws IOException {
+        Main.configurator.savePlayerData(Main.playerdata);
         try {
             Main.configurator = new Configurator();
         } catch (IOException e) {

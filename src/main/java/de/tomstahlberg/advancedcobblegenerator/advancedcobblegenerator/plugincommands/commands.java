@@ -25,7 +25,11 @@ public class commands implements CommandExecutor, TabCompleter {
             if(args.length == 1){
                 if(args[0].equalsIgnoreCase("reload")){
                     if(sender.hasPermission("advancedcobblegenerator.admin") || sender.isOp()){
-                        new CommandReload(sender);
+                        try {
+                            new CommandReload(sender);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }else{
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix") + Main.language.getString("no_permissions_admin")));
                     }

@@ -24,7 +24,7 @@ public class CommandUpgrade {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("upgraded_but_iridium_hook")));
             }else{
                 Player player = (Player) sender;
-                Inventory inventory = Bukkit.createInventory(player, 9, ChatColor.translateAlternateColorCodes('&',Main.language.getString("prefix")+Main.language.getString("upgrade_inventory_title")));
+                Inventory inventory = Bukkit.createInventory(player, 9, ChatColor.translateAlternateColorCodes('&',Main.language.getString("upgrade_inventory_title")));
                 fillInventory(inventory, player);
                 player.openInventory(inventory);
                 Main.upgradeInventoryList.add(inventory);
@@ -38,7 +38,7 @@ public class CommandUpgrade {
     private Inventory fillInventory(Inventory inventory, Player player){
         ItemStack itemStack = new ItemStack(Material.valueOf(Main.settings.getString("cobble_generator_upgrade_material")));
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',Main.language.getString("prefix")+Main.language.getString("upgrade_item_title")));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',Main.language.getString("upgrade_item_title")));
         List<String> lore = new ArrayList<String>();
         if(isMaximumLevel(player)){
             for(String loreLine : Main.language.getStringList("upgrade_item_lore_maxed")){

@@ -7,4 +7,4 @@ softdepend: [Essentials, ServerSystem]
 commands:
   advancedcobblegenerator:
     description: 'command for reloading purposes'
-    aliases: [advancedcobbler, acg, cobblegen]
+    aliases: [advancedcobbler, acg, cobblegen, cobbler, cobble, ores, oregen, oresgen]

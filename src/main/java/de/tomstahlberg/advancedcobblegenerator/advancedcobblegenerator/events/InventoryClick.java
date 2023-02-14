@@ -24,6 +24,12 @@ public class InventoryClick implements Listener {
                         doUpgrade(((Player) event.getWhoClicked()).getPlayer());
                     }
                 }
+            }else{
+                if(event.getWhoClicked().getOpenInventory() != null){
+                    if(Main.upgradeInventoryList.contains(event.getWhoClicked().getOpenInventory())){
+                        event.setCancelled(true);
+                    }
+                }
             }
         }
 
@@ -40,6 +46,8 @@ public class InventoryClick implements Listener {
                 Main.playerdata.put(player.getUniqueId(), newLevel);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &aDu hast deinen Cobbler aufgelevelt."));
                 player.closeInventory();
+            }else{
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6&lGolden&3&lSky &8x &cDu hast nicht genug Geld."));
             }
         }
     }

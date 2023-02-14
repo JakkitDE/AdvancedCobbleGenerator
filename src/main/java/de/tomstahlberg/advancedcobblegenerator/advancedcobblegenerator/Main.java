@@ -53,6 +53,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
+        getServer().getPluginCommand("advancedcobblegenerator").setTabCompleter(new commands());
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting."));
         try {
             configurator = new Configurator();

@@ -5,15 +5,15 @@ import com.iridium.iridiumskyblock.database.Island;
 import com.iridium.iridiumskyblock.database.IslandUpgrade;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.ConfigBasedMaterial;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class BlockFromTo implements Listener {
@@ -94,6 +94,9 @@ public class BlockFromTo implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run(){
                         loc.getBlock().setType(material);
+                        loc.getWorld().playSound(loc, Sound.BLOCK_LAVA_EXTINGUISH, 1.0f, 1.0f);
+                        loc.getWorld().playEffect(loc, Effect.SMOKE, 1);
+
                     }
                 }, Main.settings.getInt("ticksPerBlockSet"));
             }
@@ -105,6 +108,8 @@ public class BlockFromTo implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run(){
                         loc.getBlock().setType(material);
+                        loc.getWorld().playSound(loc, Sound.BLOCK_LAVA_EXTINGUISH, 1.0f, 1.0f);
+                        loc.getWorld().playEffect(loc, Effect.SMOKE, 1);
                     }
                 }, Main.settings.getInt("ticksPerBlockSet"));
             }

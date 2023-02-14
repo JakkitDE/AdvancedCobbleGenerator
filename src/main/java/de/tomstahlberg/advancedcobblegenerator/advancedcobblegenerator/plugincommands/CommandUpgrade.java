@@ -46,17 +46,33 @@ public class CommandUpgrade {
             lore = replaceLorePlaceholder(lore, player);
         }else{
             lore.add(ChatColor.translateAlternateColorCodes('&',"&7Aktuelles Level: &a%current_cobbler_level%"));
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&7Upgrade Preis: &a%upgrade_price%"));
+            lore.add(ChatColor.translateAlternateColorCodes('&',"&7Upgrade Preis: &a%upgrade_price% &2$"));
             lore = replaceLorePlaceholder(lore, player);
         }
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         inventory.setItem(4, itemStack);
+        setPlaceHolder(inventory, 0);
+        setPlaceHolder(inventory, 1);
+        setPlaceHolder(inventory, 2);
+        setPlaceHolder(inventory, 3);
+
+        setPlaceHolder(inventory, 5);
+        setPlaceHolder(inventory, 6);
+        setPlaceHolder(inventory, 7);
+        setPlaceHolder(inventory, 8);
         return inventory;
     }
 
     private Integer getCurrentCobblerLevel(Player player){
         return Main.playerdata.get(player.getUniqueId());
+    }
+    private void setPlaceHolder(Inventory inventory, Integer slot){
+        ItemStack itemStack = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&'," "));
+        itemStack.setItemMeta(itemMeta);
+        inventory.setItem(slot, itemStack);
     }
     private Boolean isMaximumLevel(Player player){
         Integer nextCobblerLevel = getCurrentCobblerLevel(player)+1;
@@ -78,7 +94,6 @@ public class CommandUpgrade {
             loreLine = loreLine.replace("%upgrade_price%", getCobblerUpgradePrice(player).toString());
             newLore.add(loreLine);
         }
-        player.sendMessage(newLore.toString());
         return newLore;
     }
 }

@@ -1,6 +1,6 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator;
 
-import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configuration;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ public class commands implements CommandExecutor {
                 if(args[0].equalsIgnoreCase("reload")){
                     //reload
                     try {
-                        Main.configurator = new Configuration();
+                        Main.configurator = new Configurator();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

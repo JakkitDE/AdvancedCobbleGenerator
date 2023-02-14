@@ -1,39 +1,54 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.BlockBreak;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.BlockFromTo;
-import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configuration;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.PlayerJoin;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public final class Main extends JavaPlugin {
     public static Plugin plugin;
     public static IridiumSkyblockAPI iridiumSkyblockAPI;
 
-    public static Configuration configurator;
+    public static Configurator configurator;
     public static FileConfiguration settings;
+
+    public static HashMap<UUID, Integer> playerdata;
     public static Biome defaultBiome;
     public static HashMap<Biome, HashMap<Integer, List<Material>>> generatorMap = new HashMap<Biome, HashMap<Integer, List<Material>>>();
     public static List<World> worldList;
+
+    public static HashMap<Location, Player> cobblerBlocksBroken = new HashMap<Location, Player>();
+
+    public static Boolean iridiumHook;
     @Override
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
         iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
         getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
-        getServer().getConsoleSender().sendMessage("§aCobbleGen wird gestartet.");
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aCobble Gen wird gestartet."));
         try {
-            configurator = new Configuration();
+            configurator = new Configurator();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -43,13 +58,16 @@ public final class Main extends JavaPlugin {
         settings = configurator.getSettingsConfiguration();
         worldList = configurator.getWorlds();
         defaultBiome = genMap.getDefaultBiome();
-
-        getServer().getConsoleSender().sendMessage("§aCobbleGen gestartet.");
+        iridiumHook = configurator.getIridiumHook();
+        playerdata = configurator.loadPlayerData();
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aCobble Gen gestartet."));
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        configurator.savePlayerData(playerdata);
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&cCobble Gen gestoppt."));
     }
 
 }

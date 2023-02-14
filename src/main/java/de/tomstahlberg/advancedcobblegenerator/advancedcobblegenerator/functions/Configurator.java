@@ -1,7 +1,6 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions;
 
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,15 +9,25 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
-public class Configuration {
+public class Configurator {
     File generatorFile;
     FileConfiguration generatorConfiguration;
 
     File settingsFile;
     FileConfiguration settingsConfiguration;
-    public Configuration() throws IOException {
+
+    File upgradesFile;
+    FileConfiguration upgradesConfiguration;
+
+    File playerdataFile;
+    FileConfiguration playerdataConfiguration;
+
+
+    public Configurator() throws IOException {
         this.generatorFile = new File(Main.plugin.getDataFolder(), "generator.yml");
         if(!(configurationFileExists())){
             this.generatorConfiguration = new YamlConfiguration();
@@ -33,6 +42,22 @@ public class Configuration {
             setupConfiguration(this.settingsConfiguration, "settings");
         }else{
             this.settingsConfiguration = YamlConfiguration.loadConfiguration(settingsFile);
+        }
+
+        this.upgradesFile = new File(Main.plugin.getDataFolder(), "upgrades.yml");
+        if(!(upgradesFileExists())){
+            this.upgradesConfiguration = new YamlConfiguration();
+            setupConfiguration(this.upgradesConfiguration, "upgrades");
+        }else{
+            this.upgradesConfiguration = YamlConfiguration.loadConfiguration(upgradesFile);
+        }
+
+        this.playerdataFile = new File(Main.plugin.getDataFolder(), "playerdata.yml");
+        if(!(playerdataFileExists())){
+            this.playerdataConfiguration = new YamlConfiguration();
+            setupConfiguration(this.playerdataConfiguration, "playerdata");
+        }else{
+            this.playerdataConfiguration = YamlConfiguration.loadConfiguration(playerdataFile);
         }
 
     }
@@ -52,11 +77,34 @@ public class Configuration {
             return false;
         }
     }
+
+    private boolean upgradesFileExists(){
+        if(this.upgradesFile.exists()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean playerdataFileExists(){
+        if(this.playerdataFile.exists()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public FileConfiguration getGeneratorConfiguration(){
         return this.generatorConfiguration;
     }
     public FileConfiguration getSettingsConfiguration(){
         return this.settingsConfiguration;
+    }
+    public FileConfiguration getUpgradesConfiguration(){
+        return this.upgradesConfiguration;
+    }
+    public FileConfiguration getPlayerdataConfiguration(){
+        return this.playerdataConfiguration;
     }
     public List<World> getWorlds(){
         List<World> worldList = new ArrayList<World>();
@@ -99,8 +147,34 @@ public class Configuration {
             configuration.set("worlds", listOfWorldNames);
 
             configuration.set("ticksPerBlockSet", 10);
+            configuration.set("hook_iridiumskyblock", false);
 
             configuration.save(this.settingsFile);
+        } else if (configCategory.equalsIgnoreCase("upgrades")) {
+            configuration.set("2.display_item","DIRT");
+            List<String> lore = new ArrayList<String>();
+            lore.add("&aPrice: &6&l500 &e&l$");
+            configuration.set("2.lore",lore);
+            configuration.set("2.price","500.0");
+        } else if (configCategory.equalsIgnoreCase("playerdata")) {
+
+        }
+    }
+    public Boolean getIridiumHook(){
+        return this.settingsConfiguration.getBoolean("hook_iridiumskyblock");
+    }
+
+    public HashMap<UUID, Integer> loadPlayerData(){
+        HashMap<UUID, Integer> playerdata = new HashMap<UUID, Integer>();
+        for(String uuidString : this.playerdataConfiguration.getConfigurationSection("").getKeys(false)){
+            playerdata.put(UUID.fromString(uuidString), this.playerdataConfiguration.getInt(uuidString));
+        }
+        return playerdata;
+    }
+    public void savePlayerData(HashMap<UUID, Integer> playerdata){
+        FileConfiguration playerdataConfig = new YamlConfiguration();
+        for(UUID uuid : playerdata.keySet()){
+            playerdataConfig.set(uuid.toString(), playerdata.get(uuid));
         }
     }
 }

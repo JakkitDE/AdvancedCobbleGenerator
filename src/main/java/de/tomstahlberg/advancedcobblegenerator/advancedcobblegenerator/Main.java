@@ -1,10 +1,7 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.BlockBreak;
-import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.BlockFromTo;
-import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.InventoryClick;
-import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.PlayerJoin;
+import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.*;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.plugincommands.commands;
@@ -52,9 +49,12 @@ public final class Main extends JavaPlugin {
         plugin = this;
         if(getServer().getPluginManager().getPlugin("") != null){
             iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
+            getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
+        }else{
+            getServer().getPluginManager().registerEvents(new BlockFromToSingle(), this);
         }
 
-        getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
+
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);

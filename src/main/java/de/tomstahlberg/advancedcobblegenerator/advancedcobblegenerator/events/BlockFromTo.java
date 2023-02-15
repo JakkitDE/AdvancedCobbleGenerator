@@ -94,8 +94,13 @@ public class BlockFromTo implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run(){
                         loc.getBlock().setType(material);
-                        loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
-                        loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
+                        if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
+                            loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
+                        }
+                        if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
+                            loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
+                        }
+
 
                     }
                 }, Main.settings.getInt("ticksPerBlockSet"));
@@ -108,8 +113,12 @@ public class BlockFromTo implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run(){
                         loc.getBlock().setType(material);
-                        loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
-                        loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
+                        if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
+                            loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
+                        }
+                        if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
+                            loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
+                        }
                     }
                 }, Main.settings.getInt("ticksPerBlockSet"));
             }

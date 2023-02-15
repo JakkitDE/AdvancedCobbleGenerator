@@ -54,7 +54,6 @@ public final class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new BlockFromToSingle(), this);
         }
 
-
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);

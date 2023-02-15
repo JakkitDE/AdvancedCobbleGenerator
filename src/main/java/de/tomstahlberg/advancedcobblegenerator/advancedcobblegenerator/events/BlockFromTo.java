@@ -86,8 +86,11 @@ public class BlockFromTo implements Listener {
 
 
     private void doDelayedBlockSet(Location loc){
+        //Main.plugin.getServer().getPlayer("Kadnick").sendMessage("soDelayedBlockSet wird ausgeführt");
         if(Main.iridiumHook == true){
+            //Main.plugin.getServer().getPlayer("Kadnick").sendMessage("IridiumHook an");
             if(isOnIsland(loc) == true){
+                //Main.plugin.getServer().getPlayer("Kadnick").sendMessage("ist auf Island");
                 Island island = getIsland(loc);
                 ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));
                 Material material = configBasedMaterial.getMaterial();

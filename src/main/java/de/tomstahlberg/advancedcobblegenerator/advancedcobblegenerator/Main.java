@@ -50,7 +50,10 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
-        iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
+        if(getServer().getPluginManager().getPlugin("") != null){
+            iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
+        }
+
         getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);

@@ -50,7 +50,7 @@ public final class Main extends JavaPlugin {
         // Plugin startup logic
         plugin = this;
         debugMode = false;
-        if(getServer().getPluginManager().getPlugin("") != null){
+        if(getServer().getPluginManager().getPlugin("IridiumSkyblock") != null){
             iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
             getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
         }else{
@@ -62,7 +62,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
         getServer().getPluginCommand("advancedcobblegenerator").setTabCompleter(new commands());
-        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting."));
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting build_011."));
         try {
             configurator = new Configurator();
         } catch (IOException e) {

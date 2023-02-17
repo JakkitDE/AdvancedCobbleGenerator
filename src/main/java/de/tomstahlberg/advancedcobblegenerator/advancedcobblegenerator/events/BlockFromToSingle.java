@@ -1,5 +1,7 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events;
 
+import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
+import com.iridium.iridiumskyblock.database.Island;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.ConfigBasedMaterial;
 import org.bukkit.*;
@@ -7,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
+
+import java.util.Optional;
 
 public class BlockFromToSingle implements Listener {
     @EventHandler
@@ -19,7 +23,6 @@ public class BlockFromToSingle implements Listener {
                 if(locPlusZ.getBlock().getType() == Material.MAGMA_BLOCK){
                     locPlusZ.setZ(locPlusZ.getZ()-1.0);
                     event.setCancelled(true);
-                    //locPlusZ.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locPlusZ);
                 }
 
@@ -28,7 +31,6 @@ public class BlockFromToSingle implements Listener {
                 if(locMinusZ.getBlock().getType() == Material.MAGMA_BLOCK){
                     locMinusZ.setZ(locMinusZ.getZ()+1.0);
                     event.setCancelled(true);
-                    //locMinusZ.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locMinusZ);
                 }
 
@@ -37,7 +39,6 @@ public class BlockFromToSingle implements Listener {
                 if(locPlusX.getBlock().getType() == Material.MAGMA_BLOCK){
                     locPlusX.setX(locPlusX.getX()-1.0);
                     event.setCancelled(true);
-                    //locPlusX.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locPlusX);
                 }
 
@@ -46,7 +47,6 @@ public class BlockFromToSingle implements Listener {
                 if(locMinusX.getBlock().getType() == Material.MAGMA_BLOCK){
                     locMinusX.setX(locMinusX.getX()+1.0);
                     event.setCancelled(true);
-                    //locMinusX.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locMinusX);
                 }
             }
@@ -62,9 +62,12 @@ public class BlockFromToSingle implements Listener {
             Player player = Main.cobblerBlocksBroken.get(loc);
             ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(player));
             Material material = configBasedMaterial.getMaterial();
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+            Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
                 public void run(){
                     loc.getBlock().setType(material);
+                    if(Main.debugMode == true){
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
+                    }
                     if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
                         loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
                     }
@@ -72,7 +75,7 @@ public class BlockFromToSingle implements Listener {
                         loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
                     }
                 }
-                }, Main.settings.getInt("ticksPerBlockSet"));
+            }, Main.settings.getInt("ticksPerBlockSet"));
         }
 
     }

@@ -27,7 +27,6 @@ public class BlockFromTo implements Listener {
                 if(locPlusZ.getBlock().getType() == Material.MAGMA_BLOCK){
                     locPlusZ.setZ(locPlusZ.getZ()-1.0);
                     event.setCancelled(true);
-                    //locPlusZ.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locPlusZ);
                 }
 
@@ -36,7 +35,6 @@ public class BlockFromTo implements Listener {
                 if(locMinusZ.getBlock().getType() == Material.MAGMA_BLOCK){
                     locMinusZ.setZ(locMinusZ.getZ()+1.0);
                     event.setCancelled(true);
-                    //locMinusZ.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locMinusZ);
                 }
 
@@ -45,7 +43,6 @@ public class BlockFromTo implements Listener {
                 if(locPlusX.getBlock().getType() == Material.MAGMA_BLOCK){
                     locPlusX.setX(locPlusX.getX()-1.0);
                     event.setCancelled(true);
-                    //locPlusX.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locPlusX);
                 }
 
@@ -54,7 +51,6 @@ public class BlockFromTo implements Listener {
                 if(locMinusX.getBlock().getType() == Material.MAGMA_BLOCK){
                     locMinusX.setX(locMinusX.getX()+1.0);
                     event.setCancelled(true);
-                    //locMinusX.getBlock().setType(Material.STONE);
                     doDelayedBlockSet(locMinusX);
                 }
             }
@@ -80,57 +76,27 @@ public class BlockFromTo implements Listener {
     private int getCobblerLevel (Island island){
         return Main.iridiumSkyblockAPI.getIslandUpgrade(island, "generator").getLevel();
     }
-    private int getCobblerLevel(Player player){
-        return Main.playerdata.get(player.getUniqueId());
-    }
-
-
     private void doDelayedBlockSet(Location loc){
-        //Main.plugin.getServer().getPlayer("Kadnick").sendMessage("soDelayedBlockSet wird ausgeführt");
-        if(Main.iridiumHook == true){
-            //Main.plugin.getServer().getPlayer("Kadnick").sendMessage("IridiumHook an");
-            if(isOnIsland(loc) == true){
-                //Main.plugin.getServer().getPlayer("Kadnick").sendMessage("ist auf Island");
-                Island island = getIsland(loc);
-                ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));
-                Material material = configBasedMaterial.getMaterial();
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    public void run(){
-                        loc.getBlock().setType(material);
-                        if(Main.debugMode == true){
-                            island.getOwner().getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
-                        }
-                        if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
-                            loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
-                        }
-                        if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
-                            loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
-                        }
+        if(isOnIsland(loc) == true){
+            Island island = getIsland(loc);
+            ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));
+            Material material = configBasedMaterial.getMaterial();
+            Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+                public void run(){
+                    loc.getBlock().setType(material);
+                    if(Main.debugMode == true){
+                        island.getOwner().getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
+                    }
+                    if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
+                        loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1, 1);
+                    }
+                    if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
+                        loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
+                    }
 
 
-                    }
-                }, Main.settings.getInt("ticksPerBlockSet"));
-            }
-        }else{
-            if(Main.cobblerBlocksBroken.containsKey(loc)){
-                Player player = Main.cobblerBlocksBroken.get(loc);
-                ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(player));
-                Material material = configBasedMaterial.getMaterial();
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-                    public void run(){
-                        loc.getBlock().setType(material);
-                        if(Main.debugMode == true){
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
-                        }
-                        if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
-                            loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
-                        }
-                        if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
-                            loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
-                        }
-                    }
-                }, Main.settings.getInt("ticksPerBlockSet"));
-            }
+                }
+            }, Main.settings.getInt("ticksPerBlockSet"));
         }
     }
 }

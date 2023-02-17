@@ -51,6 +51,21 @@ public class commands implements CommandExecutor, TabCompleter {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',line));
                         }
                     }
+                }else if (args[0].equalsIgnoreCase("debug")){
+                    if(sender.hasPermission("advancedcobblegenerator.admin") || sender.isOp()){
+                        if(Main.debugMode == false){
+                            Main.debugMode = true;
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aDebug Mode enabled."));
+                        }else{
+                            Main.debugMode = false;
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &eDebug Mode disabled."));
+                        }
+                    }else{
+                        List<String> help_menu = Main.language.getStringList("help_menu_players");
+                        for(String line : help_menu){
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',line));
+                        }
+                    }
                 }else{
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix") + Main.language.getString("wrong_usage")));
                 }
@@ -76,6 +91,7 @@ public class commands implements CommandExecutor, TabCompleter {
             }
             if(sender.hasPermission("advancedcobblegenerator.admin") || sender.isOp()){
                 arguments.add("reload");
+                arguments.add("debug");
             }
         }
         return arguments;

@@ -97,6 +97,9 @@ public class BlockFromTo implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run(){
                         loc.getBlock().setType(material);
+                        if(Main.debugMode == true){
+                            island.getOwner().getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
+                        }
                         if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
                             loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
                         }
@@ -116,6 +119,9 @@ public class BlockFromTo implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
                     public void run(){
                         loc.getBlock().setType(material);
+                        if(Main.debugMode == true){
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
+                        }
                         if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
                             loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
                         }

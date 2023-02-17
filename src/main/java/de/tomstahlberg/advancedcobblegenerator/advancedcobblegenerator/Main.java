@@ -43,10 +43,13 @@ public final class Main extends JavaPlugin {
     public static Economy econ = null;
 
     public static FileConfiguration language;
+
+    public static Boolean debugMode;
     @Override
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
+        debugMode = false;
         if(getServer().getPluginManager().getPlugin("") != null){
             iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
             getServer().getPluginManager().registerEvents(new BlockFromTo(), this);

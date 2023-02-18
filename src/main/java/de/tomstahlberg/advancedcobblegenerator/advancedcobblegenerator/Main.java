@@ -58,7 +58,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginManager().registerEvents(new UpgradeInventoryClick(), this);
         getServer().getPluginManager().registerEvents(new EditorIntentoryClick(), this);
-        getServer().getPluginManager().registerEvents(new PlayerChat(), this);
+        getServer().getPluginManager().registerEvents(new PlayerChatBiomeEditor(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
         getServer().getPluginCommand("advancedcobblegenerator").setTabCompleter(new commands());
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting v.1.2_build_02."));

@@ -17,6 +17,7 @@ public class EditorIntentoryClick implements Listener {
                 if(checkIfClickedAddItem(event.getClickedInventory().getItem(event.getSlot()), (Player) event.getWhoClicked())){
                     event.getWhoClicked().closeInventory();
                     Main.editorInventoryList.remove(event.getInventory());
+                    Main.editorBiomeAddMode.add((Player) event.getWhoClicked());
                 }
             }
         }
@@ -24,8 +25,19 @@ public class EditorIntentoryClick implements Listener {
     private Boolean checkIfClickedAddItem(ItemStack itemStack, Player player){
         if(itemStack != null && itemStack.hasItemMeta()){
             if(itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&aAdd Biome"))){
+                player.sendMessage("");
+                player.sendMessage("");
+                player.sendMessage("");
+                player.sendMessage("");
+                player.sendMessage("");
+                player.sendMessage("");
+                player.sendMessage("");
+                player.sendMessage("");
+                player.sendMessage("");
+                player.sendMessage("");
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&aEnter the &5biome &ain the chat or type &5exit &ato abort."));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&aEnter the &5biome &ainto the"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&achat or type &5exit &ato abort."));
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
                 return true;
             }else{

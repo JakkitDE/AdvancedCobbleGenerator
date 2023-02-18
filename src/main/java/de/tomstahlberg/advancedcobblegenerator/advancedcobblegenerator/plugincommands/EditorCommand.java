@@ -32,7 +32,7 @@ public class EditorCommand {
     }
     private void setupInventory(){
         Inventory inventory;
-        inventory = Bukkit.createInventory(this.player, 54, ChatColor.translateAlternateColorCodes('&',"&eEditor - Biom"));
+        inventory = Bukkit.createInventory(this.player, 54, ChatColor.translateAlternateColorCodes('&',"&eBiomes"));
 
         int i = 0;
         for(ItemStack itemStack : getBiomeList()){
@@ -40,7 +40,7 @@ public class EditorCommand {
                 inventory.setItem(i, itemStack);
                 i++;
             }else{
-                return;
+                break;
             }
         }
 

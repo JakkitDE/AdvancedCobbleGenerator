@@ -57,7 +57,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginManager().registerEvents(new UpgradeInventoryClick(), this);
-        getServer().getPluginManager().registerEvents(new EditorIntentoryClick(), this);
+        getServer().getPluginManager().registerEvents(new EditorIntentoryBiomesClick(), this);
         getServer().getPluginManager().registerEvents(new PlayerChatBiomeEditor(), this);
         getServer().getPluginManager().registerEvents(new EditorInventoryLevelClick(), this);
         getServer().getPluginManager().registerEvents(new EditorInventoryContentsClick(), this);
@@ -118,6 +118,7 @@ public final class Main extends JavaPlugin {
         // Plugin shutdown logic
         try {
             configurator.savePlayerData(playerdata);
+            configurator.saveGeneratorSettings();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -57,10 +57,30 @@ public class EditorInventoryLevelClick implements Listener {
                         //prepair contents inventory
                         Main.editorInventoryLevelsList.remove(event.getInventory());
                         Integer level = Integer.valueOf(ChatColor.stripColor(itemStack.getItemMeta().getDisplayName()));
-                        event.getWhoClicked().openInventory(prepareContentsInventory((Player) event.getWhoClicked(), biome, level));
+                        Inventory inventory = prepareContentsInventory((Player) event.getWhoClicked(), biome, level);
+                        Main.editorInventoryContentsList.add(inventory);
+                        event.getWhoClicked().openInventory(inventory);
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event){
+        if(event.getInventory() != null && Main.editorInventoryLevelsList.contains(event.getInventory())){
+            Main.editorInventoryLevelsList.remove(event.getInventory());
+            //open biomes overview
+            Inventory inventory = setupInventory((Player) event.getPlayer());
+            Main.editorInventoryLevelsList.remove(event.getInventory());
+            Main.editorInventoryBiomesList.add(inventory);
+            Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+                @Override
+                public void run() {
+                    event.getPlayer().openInventory(inventory);
+                }
+            },10);
+
         }
     }
     public Inventory prepareContentsInventory(Player player, String biome, Integer level){
@@ -74,7 +94,10 @@ public class EditorInventoryLevelClick implements Listener {
                 List<String> lore = new ArrayList<String>();
                 lore.add(ChatColor.translateAlternateColorCodes('&',"&eWeight: &a"+chance));
                 lore.add(ChatColor.translateAlternateColorCodes('&',"&2Left-Click to decrease weight."));
+                lore.add(ChatColor.translateAlternateColorCodes('&',"&2SHIFT+Left-Click to decrease weight in 10s."));
                 lore.add(ChatColor.translateAlternateColorCodes('&',"&2Right-Click to increase weight."));
+                lore.add(ChatColor.translateAlternateColorCodes('&',"&2SHIFT+Right-Click to increase weight in 10s."));
+                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/DROP to delete."));
                 itemMeta.setLore(lore);
                 itemStack.setItemMeta(itemMeta);
                 inventory.setItem(i, itemStack);
@@ -91,5 +114,49 @@ public class EditorInventoryLevelClick implements Listener {
             levelList.add(Integer.valueOf(level));
         }
         return Collections.max(levelList);
+    }
+
+    /*for opening the biomes list*/
+    private Inventory setupInventory(Player player){
+        Inventory inventory = Bukkit.createInventory(player, 54, ChatColor.translateAlternateColorCodes('&',"&eBiomes"));
+
+        int i = 0;
+        for(ItemStack itemStack : getBiomeList()){
+            if(i<45){
+                inventory.setItem(i, itemStack);
+                i++;
+            }else{
+                break;
+            }
+        }
+
+        inventory.setItem(53, getAddBiomeItem());
+        return inventory;
+    }
+    private ItemStack getAddBiomeItem(){
+        ItemStack itemStack = new ItemStack(Material.GREEN_BANNER);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aAdd Biome"));
+        List<String> lore = new ArrayList<String>();
+        lore.add(ChatColor.translateAlternateColorCodes('&',"&2Click to add a"));
+        lore.add(ChatColor.translateAlternateColorCodes('&',"&2new biome."));
+        itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+    private List<ItemStack> getBiomeList(){
+        List<ItemStack> biomeList = new ArrayList<ItemStack>();
+        for(String biomeString : Main.configurator.getGeneratorConfiguration().getConfigurationSection("biomes").getKeys(false)){
+            ItemStack itemStack = new ItemStack(Material.GRASS_BLOCK);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biomeString));
+            List<String> lore = new ArrayList<String>();
+            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick, to setup"));
+            lore.add(ChatColor.translateAlternateColorCodes('&',"&2this biome."));
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
+            biomeList.add(itemStack);
+        }
+        return biomeList;
     }
 }

@@ -106,7 +106,9 @@ public class Configurator {
             return false;
         }
     }
-
+    public void saveGeneratorSettings() throws IOException {
+        this.getGeneratorConfiguration().save(this.generatorFile);
+    }
     private boolean languageFileExists(){
         if(this.languageFile.exists()){
             return true;

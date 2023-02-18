@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,7 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditorIntentoryClick implements Listener {
+public class EditorIntentoryBiomesClick implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event){
         if(event.getClickedInventory() != null){
@@ -38,6 +39,12 @@ public class EditorIntentoryClick implements Listener {
                     }
                 }
             }
+        }
+    }
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event){
+        if(event.getInventory() != null && Main.editorInventoryBiomesList.contains(event.getInventory())){
+            Main.editorInventoryBiomesList.remove(event.getInventory());
         }
     }
     private Inventory prepareLevelInventory(Player player, String biome){

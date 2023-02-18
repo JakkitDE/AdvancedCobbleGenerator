@@ -51,15 +51,9 @@ public class commands implements CommandExecutor, TabCompleter {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',line));
                         }
                     }
-                }else if (args[0].equalsIgnoreCase("debug")){
+                }else if (args[0].equalsIgnoreCase("editor")){
                     if(sender.hasPermission("advancedcobblegenerator.admin") || sender.isOp()){
-                        if(Main.debugMode == false){
-                            Main.debugMode = true;
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aDebug Mode enabled."));
-                        }else{
-                            Main.debugMode = false;
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &eDebug Mode disabled."));
-                        }
+                        new EditorCommand(sender);
                     }else{
                         List<String> help_menu = Main.language.getStringList("help_menu_players");
                         for(String line : help_menu){
@@ -91,7 +85,7 @@ public class commands implements CommandExecutor, TabCompleter {
             }
             if(sender.hasPermission("advancedcobblegenerator.admin") || sender.isOp()){
                 arguments.add("reload");
-                arguments.add("debug");
+                arguments.add("editor");
             }
         }
         return arguments;

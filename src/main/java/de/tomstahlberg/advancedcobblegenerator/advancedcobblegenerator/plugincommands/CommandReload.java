@@ -2,10 +2,9 @@ package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.pluginco
 
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
-import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.io.IOException;
 
@@ -17,12 +16,10 @@ public class CommandReload {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        GeneratorMap genMap = new GeneratorMap(Main.configurator.getGeneratorConfiguration());
-        Main.generatorMap = genMap.getGeneratorMap();
 
         Main.settings = Main.configurator.getSettingsConfiguration();
 
-        Main.defaultBiome = genMap.getDefaultBiome();
+        Main.defaultBiome = Biome.valueOf(Main.configurator.getGeneratorConfiguration().getString("default"));
 
         Main.worldList = Main.configurator.getWorlds();
 

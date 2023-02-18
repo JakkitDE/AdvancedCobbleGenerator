@@ -50,7 +50,8 @@ public class PlayerChatBiomeEditor implements Listener {
                     HashMap<Integer, List<Material>> level = new HashMap<Integer, List<Material>>();
                     level.put(1, materialList);
 
-                    Main.generatorMap.put(biome, level);
+                    //Main.generatorMap.put(biome, level);
+                    Main.configurator.getGeneratorConfiguration().set("biomes."+biome.name()+".1.STONE",1);
                     //reopen Biomes list GUI
                     setupInventory();
                     openInventoryForPlayer(this.player, this.inventory);
@@ -96,7 +97,7 @@ public class PlayerChatBiomeEditor implements Listener {
             @Override
             public void run() {
                 player.openInventory(inventory);
-                Main.editorInventoryList.add(inventory);
+                Main.editorInventoryBiomesList.add(inventory);
             }
         },10);
     }
@@ -131,10 +132,10 @@ public class PlayerChatBiomeEditor implements Listener {
 
     private List<ItemStack> getBiomeList(){
         List<ItemStack> biomeList = new ArrayList<ItemStack>();
-        for(Biome biome : Main.generatorMap.keySet()){
+        for(String biomeString : Main.configurator.getGeneratorConfiguration().getConfigurationSection("biomes").getKeys(false)){
             ItemStack itemStack = new ItemStack(Material.GRASS_BLOCK);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biome.name()));
+            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biomeString));
             List<String> lore = new ArrayList<String>();
             lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick, to setup"));
             lore.add(ChatColor.translateAlternateColorCodes('&',"&2this biome."));

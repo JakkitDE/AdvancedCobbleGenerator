@@ -3,12 +3,10 @@ package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.*;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
-import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.GeneratorMap;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.plugincommands.commands;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -33,12 +31,13 @@ public final class Main extends JavaPlugin {
 
     public static HashMap<UUID, Integer> playerdata;
     public static Biome defaultBiome;
-    public static HashMap<Biome, HashMap<Integer, List<Material>>> generatorMap = new HashMap<Biome, HashMap<Integer, List<Material>>>();
+    //public static HashMap<Biome, HashMap<Integer, List<Material>>> generatorMap = new HashMap<Biome, HashMap<Integer, List<Material>>>();
     public static List<World> worldList;
 
     public static HashMap<Location, Player> cobblerBlocksBroken = new HashMap<Location, Player>();
     public static List<Inventory> upgradeInventoryList = new ArrayList<Inventory>();
-    public static List<Inventory> editorInventoryList = new ArrayList<Inventory>();
+    public static List<Inventory> editorInventoryBiomesList = new ArrayList<Inventory>();
+    public static List<Inventory> editorInventoryLevelsList = new ArrayList<Inventory>();
     public static List<Player> editorBiomeAddMode = new ArrayList<Player>();
     public static Boolean iridiumHook;
 
@@ -59,6 +58,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new UpgradeInventoryClick(), this);
         getServer().getPluginManager().registerEvents(new EditorIntentoryClick(), this);
         getServer().getPluginManager().registerEvents(new PlayerChatBiomeEditor(), this);
+        getServer().getPluginManager().registerEvents(new EditorInventoryLevelClick(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
         getServer().getPluginCommand("advancedcobblegenerator").setTabCompleter(new commands());
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting v.1.2_build_02."));
@@ -67,12 +67,10 @@ public final class Main extends JavaPlugin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        GeneratorMap genMap = new GeneratorMap(configurator.getGeneratorConfiguration());
-        generatorMap = genMap.getGeneratorMap();
+        //generatorMap = genMap.getGeneratorMap();
 
         settings = configurator.getSettingsConfiguration();
         worldList = configurator.getWorlds();
-        defaultBiome = genMap.getDefaultBiome();
         iridiumHook = configurator.getIridiumHook();
         playerdata = configurator.loadPlayerData();
         try {

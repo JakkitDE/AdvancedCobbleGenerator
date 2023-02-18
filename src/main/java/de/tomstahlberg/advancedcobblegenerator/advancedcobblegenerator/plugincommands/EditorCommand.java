@@ -4,7 +4,6 @@ import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -22,7 +21,7 @@ public class EditorCommand {
             this.player = (Player) sender;
             setupInventory();
             openInventoryForPlayer(player, this.inventory);
-            Main.editorInventoryList.add(this.inventory);
+            Main.editorInventoryBiomesList.add(this.inventory);
         }else{
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("command_executor_must_be_player")));
         }
@@ -62,10 +61,10 @@ public class EditorCommand {
 
     private List<ItemStack> getBiomeList(){
         List<ItemStack> biomeList = new ArrayList<ItemStack>();
-        for(Biome biome : Main.generatorMap.keySet()){
+        for(String biomeString : Main.configurator.getGeneratorConfiguration().getConfigurationSection("biomes").getKeys(false)){
             ItemStack itemStack = new ItemStack(Material.GRASS_BLOCK);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biome.name()));
+            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biomeString));
             List<String> lore = new ArrayList<String>();
             lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick, to setup"));
             lore.add(ChatColor.translateAlternateColorCodes('&',"&2this biome."));

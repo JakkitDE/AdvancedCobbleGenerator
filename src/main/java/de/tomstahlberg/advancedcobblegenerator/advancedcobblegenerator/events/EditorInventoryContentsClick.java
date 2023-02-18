@@ -44,7 +44,6 @@ public class EditorInventoryContentsClick implements Listener {
                         List<String> lore = itemMeta.getLore();
                         String weight[] = lore.get(0).split(" ", 2);
                         Integer weightValue = Integer.valueOf(ChatColor.stripColor(weight[1]));
-                        event.getWhoClicked().sendMessage(weightValue.toString());
                         updateWeight(weightValue-1, itemStack);
                         event.getInventory().setItem(event.getSlot(), itemStack);
                     }else if(event.getClick() == ClickType.RIGHT){
@@ -54,7 +53,6 @@ public class EditorInventoryContentsClick implements Listener {
                         List<String> lore = itemMeta.getLore();
                         String weight[] = lore.get(0).split(" ", 2);
                         Integer weightValue = Integer.valueOf(ChatColor.stripColor(weight[1]));
-                        event.getWhoClicked().sendMessage(weightValue.toString());
                         updateWeight(weightValue+1, itemStack);
                         event.getInventory().setItem(event.getSlot(), itemStack);
                     }else if(event.getClick() == ClickType.SHIFT_LEFT){
@@ -64,7 +62,6 @@ public class EditorInventoryContentsClick implements Listener {
                         List<String> lore = itemMeta.getLore();
                         String weight[] = lore.get(0).split(" ", 2);
                         Integer weightValue = Integer.valueOf(ChatColor.stripColor(weight[1]));
-                        event.getWhoClicked().sendMessage(weightValue.toString());
                         updateWeight(weightValue-10, itemStack);
                         event.getInventory().setItem(event.getSlot(), itemStack);
                     }else if(event.getClick() == ClickType.SHIFT_RIGHT){
@@ -74,7 +71,6 @@ public class EditorInventoryContentsClick implements Listener {
                         List<String> lore = itemMeta.getLore();
                         String weight[] = lore.get(0).split(" ", 2);
                         Integer weightValue = Integer.valueOf(ChatColor.stripColor(weight[1]));
-                        event.getWhoClicked().sendMessage(weightValue.toString());
                         updateWeight(weightValue+10, itemStack);
                         event.getInventory().setItem(event.getSlot(), itemStack);
                     }else if(event.getClick() == ClickType.DROP){
@@ -147,8 +143,8 @@ public class EditorInventoryContentsClick implements Listener {
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',"&e"+level));
                 List<String> lore = new ArrayList<String>();
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick to edit items of"));
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2this level."));
+                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick to edit."));
+                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/Drop to delete."));
                 itemMeta.setLore(lore);
                 itemStack.setItemMeta(itemMeta);
                 inventory.setItem(i, itemStack);

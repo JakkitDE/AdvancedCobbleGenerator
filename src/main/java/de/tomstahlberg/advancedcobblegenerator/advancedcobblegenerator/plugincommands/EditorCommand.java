@@ -66,8 +66,8 @@ public class EditorCommand {
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biomeString));
             List<String> lore = new ArrayList<String>();
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick, to setup"));
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&2this biome."));
+            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick, to setup."));
+            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/Drop to delete."));
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
             biomeList.add(itemStack);

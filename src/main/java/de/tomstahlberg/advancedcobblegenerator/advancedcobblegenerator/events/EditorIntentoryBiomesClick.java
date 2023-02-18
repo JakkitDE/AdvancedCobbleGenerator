@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -30,12 +31,18 @@ public class EditorIntentoryBiomesClick implements Listener {
                 }else{
                     if(event.getInventory().getItem(event.getSlot()) != null){
                         //clicked on a biome
-                        String biomeString = event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName();
+                        if(event.getClick() == ClickType.LEFT){
+                            String biomeString = ChatColor.stripColor(event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName());
 
-                        Inventory inventory = prepareLevelInventory((Player) event.getWhoClicked(), biomeString);
-                        event.getWhoClicked().openInventory(inventory);
-                        Main.editorInventoryBiomesList.remove(event.getInventory());
-                        Main.editorInventoryLevelsList.add(inventory);
+                            Inventory inventory = prepareLevelInventory((Player) event.getWhoClicked(), biomeString);
+                            event.getWhoClicked().openInventory(inventory);
+                            Main.editorInventoryBiomesList.remove(event.getInventory());
+                            Main.editorInventoryLevelsList.add(inventory);
+                        }else if (event.getClick() == ClickType.DROP){
+                            String biomeString = ChatColor.stripColor(event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName());
+                            Main.configurator.getGeneratorConfiguration().set("biomes."+biomeString, null);
+                            event.getInventory().setItem(event.getSlot(), null);
+                        }
                     }
                 }
             }
@@ -56,8 +63,8 @@ public class EditorIntentoryBiomesClick implements Listener {
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',"&e"+level));
                 List<String> lore = new ArrayList<String>();
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick to edit items of"));
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2this level."));
+                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick to edit."));
+                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/Drop to delete."));
                 itemMeta.setLore(lore);
                 itemStack.setItemMeta(itemMeta);
                 inventory.setItem(i, itemStack);

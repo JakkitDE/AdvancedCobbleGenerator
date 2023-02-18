@@ -39,6 +39,7 @@ public final class Main extends JavaPlugin {
     public static HashMap<Location, Player> cobblerBlocksBroken = new HashMap<Location, Player>();
     public static List<Inventory> upgradeInventoryList = new ArrayList<Inventory>();
     public static List<Inventory> editorInventoryList = new ArrayList<Inventory>();
+    public static List<Player> editorBiomeAddMode = new ArrayList<Player>();
     public static Boolean iridiumHook;
 
     public static Economy econ = null;
@@ -56,6 +57,8 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
         getServer().getPluginManager().registerEvents(new UpgradeInventoryClick(), this);
+        getServer().getPluginManager().registerEvents(new EditorIntentoryClick(), this);
+        getServer().getPluginManager().registerEvents(new PlayerChat(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
         getServer().getPluginCommand("advancedcobblegenerator").setTabCompleter(new commands());
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting v.1.2_build_02."));

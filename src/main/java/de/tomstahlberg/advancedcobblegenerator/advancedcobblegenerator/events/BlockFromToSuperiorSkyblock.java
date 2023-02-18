@@ -104,8 +104,6 @@ public class BlockFromToSuperiorSkyblock implements Listener {
                     if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
                         loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
                     }
-
-
                 }
             }, Main.settings.getInt("ticksPerBlockSet"));
         }

@@ -22,6 +22,8 @@ public class CommandUpgrade {
         if(sender instanceof Player){
             if(Main.iridiumHook == true){
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("upgraded_but_iridium_hook")));
+            }else if(Main.superiorSkyblock2Hook == true){
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Main.language.getString("prefix")+Main.language.getString("upgraded_but_superior_hook")));
             }else{
                 Player player = (Player) sender;
                 Inventory inventory = Bukkit.createInventory(player, 9, ChatColor.translateAlternateColorCodes('&',Main.language.getString("upgrade_inventory_title")));

@@ -34,7 +34,7 @@ public class EditorInventoryLevelClick implements Listener {
             //if clicked add item
             if(event.getInventory().getItem(event.getSlot()) != null){
                 ItemStack itemStack = event.getInventory().getItem(event.getSlot());
-                if(itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',"&aAdd level"))){
+                if(itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&',Main.configurator.getLanguageConfiguration().getString("editor_add_level_title")))){
                     if(event.getClick() == ClickType.LEFT){
                         Integer newLevel = getMaximumLevel(biome)+1;
                         Main.configurator.getGeneratorConfiguration().set("biomes."+biome+"."+newLevel+".STONE", 100);
@@ -45,8 +45,9 @@ public class EditorInventoryLevelClick implements Listener {
                                 ItemMeta itemMetaNewLevel = itemStackNewLevel.getItemMeta();
                                 itemMetaNewLevel.setDisplayName(ChatColor.translateAlternateColorCodes('&',"&e"+newLevel));
                                 List<String> lore = new ArrayList<String>();
-                                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick to edit."));
-                                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/Drop to delete."));
+                                for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_edit_lore")){
+                                    lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+                                }
                                 itemMetaNewLevel.setLore(lore);
                                 itemStackNewLevel.setItemMeta(itemMetaNewLevel);
                                 event.getInventory().setItem(i, itemStackNewLevel);
@@ -98,12 +99,10 @@ public class EditorInventoryLevelClick implements Listener {
                 ItemStack itemStack = new ItemStack(Material.valueOf(materialString));
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 List<String> lore = new ArrayList<String>();
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&eWeight: &a"+chance));
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Left-Click to decrease weight."));
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2SHIFT+Left-Click to decrease weight in 10s."));
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Right-Click to increase weight."));
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2SHIFT+Right-Click to increase weight in 10s."));
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/DROP to delete."));
+                lore.add(ChatColor.translateAlternateColorCodes('&',Main.configurator.getLanguageConfiguration().getString("editor_item_edit_lore_weight")+" "+chance));
+                for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_item_edit_lore")){
+                    lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+                }
                 itemMeta.setLore(lore);
                 itemStack.setItemMeta(itemMeta);
                 inventory.setItem(i, itemStack);
@@ -142,10 +141,11 @@ public class EditorInventoryLevelClick implements Listener {
     private ItemStack getAddBiomeItem(){
         ItemStack itemStack = new ItemStack(Material.GREEN_BANNER);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aAdd Biome"));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.configurator.getLanguageConfiguration().getString("editor_add_biome_title")));
         List<String> lore = new ArrayList<String>();
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2Click to add a"));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2new biome."));
+        for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_add_biome_lore")){
+            lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+        }
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
@@ -157,8 +157,9 @@ public class EditorInventoryLevelClick implements Listener {
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biomeString));
             List<String> lore = new ArrayList<String>();
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick, to setup."));
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/Drop to delete."));
+            for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_edit_lore")){
+                lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+            }
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
             biomeList.add(itemStack);

@@ -85,12 +85,10 @@ public class EditorInventoryContentsClick implements Listener {
         ItemStack itemStack = new ItemStack(itemStackToParse.getType());
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore = new ArrayList<String>();
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&eWeight: &a10"));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2Left-Click to decrease weight."));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2SHIFT+Left-Click to decrease weight in 10s."));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2Right-Click to increase weight."));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2SHIFT+Right-Click to increase weight in 10s."));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/DROP to delete."));
+        lore.add(ChatColor.translateAlternateColorCodes('&',Main.configurator.getLanguageConfiguration().getString("editor_item_edit_lore_weight")+" 10"));
+        for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_item_edit_lore")){
+            lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+        }
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
@@ -98,7 +96,7 @@ public class EditorInventoryContentsClick implements Listener {
     private void updateWeight(Integer weight, ItemStack itemStack){
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore = itemMeta.getLore();
-        lore.set(0, ChatColor.translateAlternateColorCodes('&',"&eWeight: &a"+weight));
+        lore.set(0, ChatColor.translateAlternateColorCodes('&',Main.configurator.getLanguageConfiguration().getString("editor_item_edit_lore_weight")+" "+weight));
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
     }
@@ -143,8 +141,9 @@ public class EditorInventoryContentsClick implements Listener {
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',"&e"+level));
                 List<String> lore = new ArrayList<String>();
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick to edit."));
-                lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/Drop to delete."));
+                for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_edit_lore")){
+                    lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+                }
                 itemMeta.setLore(lore);
                 itemStack.setItemMeta(itemMeta);
                 inventory.setItem(i, itemStack);
@@ -160,10 +159,11 @@ public class EditorInventoryContentsClick implements Listener {
     private void setAddLevelItem(Inventory inventory){
         ItemStack itemStack = new ItemStack(Material.GREEN_BANNER);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',"&aAdd level"));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',Main.configurator.getGeneratorConfiguration().getString("editor_add_level_title")));
         List<String> lore = new ArrayList<String>();
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2Click to add"));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2a new level."));
+        for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_add_level_lore")){
+            lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+        }
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         inventory.setItem(53, itemStack);

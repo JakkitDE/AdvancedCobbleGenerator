@@ -231,6 +231,7 @@ public class Configurator {
             configuration.set("wrong_usage","&cWrong usage. Please type &e/cobble help &cfor more informations.");
             configuration.set("reload_successfull", "&aSuccessfully reloaded &eACG&a.");
             configuration.set("upgraded_but_iridium_hook", "&cPlease use &e/is upgrade &cto upgrade you cobble generator.");
+            configuration.set("upgraded_but_superior_hook", "&cPlease use &e/is upgrade &cto upgrade you cobble generator.");
 
             configuration.set("upgrade_inventory_title", "&5Upgrade Panel");
             configuration.set("command_executor_must_be_player", "&cOnly players can run that command.");
@@ -251,6 +252,32 @@ public class Configurator {
             configuration.set("not_enough_money_for_upgrade", "&cYou can't afford that.");
             configuration.set("upgrade_successfull", "&aYou successfully upgraded your cobble generator.");
 
+            List<String> addBiomeItemLore = new ArrayList<String>();
+            addBiomeItemLore.add("&7Click to add");
+            addBiomeItemLore.add("&7a new biome.");
+            configuration.set("editor_add_biome_lore", addBiomeItemLore);
+            configuration.set("editor_add_biome_title", "&aAdd biome");
+
+            List<String> addLevelItemLore = new ArrayList<String>();
+            addLevelItemLore.add("&7Click to add");
+            addLevelItemLore.add("&7a new level.");
+            configuration.set("editor_add_level_lore", addLevelItemLore);
+            configuration.set("editor_add_level_title", "&aAdd level");
+
+            List<String> editor_edit = new ArrayList<String>();
+            editor_edit.add("&7Leftclick to edit.");
+            editor_edit.add("&7Q/Drop to delete.");
+            configuration.set("editor_edit_lore", editor_edit);
+
+            configuration.set("editor_item_edit_lore_weight", "&eWeight:&a");
+
+            List<String> editor_item_edit = new ArrayList<String>();
+            editor_item_edit.add("&7Left-Click to decrease weight.");
+            editor_item_edit.add("&7SHIFT+Left-Click to decrease weight in 10s.");
+            editor_item_edit.add("&7Right-Click to increase weight.");
+            editor_item_edit.add("&7SHIFT+Right-Click to increase weight in 10s.");
+            editor_item_edit.add("&7Q/DROP to delete.");
+            configuration.set("editor_item_edit_lore", editor_item_edit);
 
             configuration.save(this.languageFile);
         }

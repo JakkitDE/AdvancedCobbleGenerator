@@ -50,10 +50,11 @@ public class EditorCommand {
     private ItemStack getAddBiomeItem(){
         ItemStack itemStack = new ItemStack(Material.GREEN_BANNER);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aAdd Biome"));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.configurator.getLanguageConfiguration().getString("editor_add_biome_title")));
         List<String> lore = new ArrayList<String>();
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2Click to add a"));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2new biome."));
+        for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_add_biome_lore")){
+            lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+        }
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
@@ -66,8 +67,9 @@ public class EditorCommand {
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biomeString));
             List<String> lore = new ArrayList<String>();
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick, to setup."));
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Q/Drop to delete."));
+            for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_edit_lore")){
+                lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+            }
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
             biomeList.add(itemStack);

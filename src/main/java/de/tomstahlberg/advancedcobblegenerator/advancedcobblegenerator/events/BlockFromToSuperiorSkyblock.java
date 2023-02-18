@@ -1,12 +1,12 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events;
 
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblock;
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import com.bgsoftware.superiorskyblock.api.config.SettingsManager;
 import com.bgsoftware.superiorskyblock.api.handlers.*;
+import com.bgsoftware.superiorskyblock.api.island.Island;
 import com.bgsoftware.superiorskyblock.api.scripts.IScriptEngine;
 import com.bgsoftware.superiorskyblock.api.world.event.WorldEventsManager;
-import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import com.iridium.iridiumskyblock.database.Island;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.ConfigBasedMaterial;
 import org.bukkit.*;
@@ -34,7 +34,6 @@ public class BlockFromToSuperiorSkyblock implements Listener {
     public void onBlockFromTo(BlockFromToEvent event){
         if (event.getBlock().getType() == Material.WATER){
             if(Main.worldList.contains(event.getBlock().getLocation().getWorld())){
-
                 Location locPlusZ = new Location(event.getToBlock().getWorld(), event.getToBlock().getX(), event.getToBlock().getY(), event.getToBlock().getZ());
                 locPlusZ.setZ(locPlusZ.getZ()+1.0);
                 if(locPlusZ.getBlock().getType() == Material.MAGMA_BLOCK){
@@ -71,21 +70,23 @@ public class BlockFromToSuperiorSkyblock implements Listener {
     }
 
     private Boolean isOnIsland(Location loc){
-        IridiumSkyblockAPI api = Main.iridiumSkyblockAPI;
-        Optional<Island> island = api.getIslandViaLocation(loc);
-        if(island == null || !(island.isPresent())){
-            return false;
-        }else{
+        if(SuperiorSkyblockAPI.getIslandAt(loc) != null){
             return true;
+        }else{
+            return false;
         }
     }
 
     private Island getIsland (Location loc){
-
+        return SuperiorSkyblockAPI.getIslandAt(loc);
     }
 
     private int getCobblerLevel (Island island){
-        return Main.iridiumSkyblockAPI.getIslandUpgrade(island, "generator").getLevel();
+        if(island.getUpgrades().get("generator-rates") != null){
+            return island.getUpgrades().get("generator-rates");
+        }else{
+            return 1;
+        }
     }
     private void doDelayedBlockSet(Location loc){
         if(isOnIsland(loc) == true){
@@ -95,7 +96,7 @@ public class BlockFromToSuperiorSkyblock implements Listener {
                 public void run(){
                     loc.getBlock().setType(material);
                     if(Main.debugMode == true){
-                        island.getOwner().getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
+                        island.getOwner().asPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
                     }
                     if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
                         loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1, 1);

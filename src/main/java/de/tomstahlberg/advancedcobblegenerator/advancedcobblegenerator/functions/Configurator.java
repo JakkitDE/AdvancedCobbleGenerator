@@ -88,7 +88,9 @@ public class Configurator {
             return false;
         }
     }
-
+    public Boolean getJetsMinionsHook(){
+        return this.settingsConfiguration.getBoolean("hook_jetsminions");
+    }
     private boolean upgradesFileExists(){
         if(this.upgradesFile.exists()){
             return true;
@@ -176,6 +178,7 @@ public class Configurator {
 
 
             configuration.set("hook_iridiumskyblock", false);
+            configuration.set("hook_jetsminions", false);
             comments.clear();
             comments.add("For cobble_generator_sound and cobble_generator_effect");
             comments.add("you can set NONE to remove sound and/or effect. Use upper case only.");
@@ -270,5 +273,11 @@ public class Configurator {
             playerdataConfig.set(uuid.toString(), playerdata.get(uuid));
         }
         playerdataConfig.save(playerdataFile);
+    }
+    public void checkUpdateVariables () throws IOException {
+        if(!(this.settingsConfiguration.isConfigurationSection("hook_jetsminions"))){
+            this.settingsConfiguration.set("hook_jetsminions", false);
+        }
+        this.settingsConfiguration.save(this.settingsFile);
     }
 }

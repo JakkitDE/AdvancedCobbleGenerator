@@ -3,7 +3,7 @@ version: '${project.version}'
 main: de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main
 api-version: 1.19
 depend: [Vault]
-softdepend: [Essentials, ServerSystem, IridiumSkyblock]
+softdepend: [Essentials, ServerSystem, IridiumSkyblock, JetsMinions]
 commands:
   advancedcobblegenerator:
     description: 'command for reloading purposes'

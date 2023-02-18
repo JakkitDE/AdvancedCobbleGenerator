@@ -87,6 +87,9 @@ public final class Main extends JavaPlugin {
         }else{
             getServer().getPluginManager().registerEvents(new BlockFromToSingle(), this);
         }
+        if(configurator.getJetsMinionsHook()){
+            getServer().getPluginManager().registerEvents(new BlockBreakByMinion(), this);
+        }
     }
 
     @Override

@@ -53,7 +53,8 @@ public class PlayerChatBiomeEditor implements Listener {
                     Main.generatorMap.put(biome, level);
                     //reopen Biomes list GUI
                     setupInventory();
-                    openInventoryForPlayer(player, this.inventory);
+                    openInventoryForPlayer(this.player, this.inventory);
+
                 }
             }catch(Exception e){
                 if(event.getMessage().equalsIgnoreCase("exit")){
@@ -90,9 +91,14 @@ public class PlayerChatBiomeEditor implements Listener {
             }
         }
     }
-
     private void openInventoryForPlayer(Player player, Inventory inventory){
-        this.player.openInventory(this.inventory);
+        Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+            @Override
+            public void run() {
+                player.openInventory(inventory);
+                Main.editorInventoryList.add(inventory);
+            }
+        },10);
     }
     private void setupInventory(){
         Inventory inventory;

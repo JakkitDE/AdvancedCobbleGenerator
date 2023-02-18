@@ -89,7 +89,7 @@ public class Configurator {
         }
     }
     public Boolean getJetsMinionsHook(){
-        return this.settingsConfiguration.getBoolean("hook_jetsminions");
+        return Boolean.valueOf(this.settingsConfiguration.getString("hook_jetsminions"));
     }
     private boolean upgradesFileExists(){
         if(this.upgradesFile.exists()){
@@ -275,8 +275,8 @@ public class Configurator {
         playerdataConfig.save(playerdataFile);
     }
     public void checkUpdateVariables () throws IOException {
-        if(!(this.settingsConfiguration.isConfigurationSection("hook_jetsminions"))){
-            this.settingsConfiguration.set("hook_jetsminions", false);
+        if(this.settingsConfiguration.getString("hook_jetsminions", "") == ""){
+            this.settingsConfiguration.set("hook_jetsminions", "false");
         }
         this.settingsConfiguration.save(this.settingsFile);
     }

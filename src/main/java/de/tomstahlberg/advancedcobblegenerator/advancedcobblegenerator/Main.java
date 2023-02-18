@@ -57,7 +57,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
         getServer().getPluginCommand("advancedcobblegenerator").setTabCompleter(new commands());
-        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting build_011."));
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting v.1.2_build_02."));
         try {
             configurator = new Configurator();
         } catch (IOException e) {
@@ -71,7 +71,11 @@ public final class Main extends JavaPlugin {
         defaultBiome = genMap.getDefaultBiome();
         iridiumHook = configurator.getIridiumHook();
         playerdata = configurator.loadPlayerData();
-
+        try {
+            configurator.checkUpdateVariables();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (!setupEconomy() ) {
             getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &cStopped, due to not having an economy plugin installed."));
             getServer().getPluginManager().disablePlugin(this);
@@ -82,13 +86,26 @@ public final class Main extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fSuccessfully started."));
 
         if(iridiumHook == true){
-            iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
-            getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
+            if(getServer().getPluginManager().getPlugin("IridiumSkyblock") != null){
+                iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
+                getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
+                getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &aSuccessfully hooked into &fIridiumSkyblock&a."));
+            }else{
+                getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &cYou enabled IridiumHook in settings, but IridiumSkyblock is missing. Plugin is disabling. Install IridiumSkyblock or disable the hook in settings.yml."));
+                getServer().getPluginManager().disablePlugin(this);
+            }
+
         }else{
             getServer().getPluginManager().registerEvents(new BlockFromToSingle(), this);
         }
         if(configurator.getJetsMinionsHook()){
-            getServer().getPluginManager().registerEvents(new BlockBreakByMinion(), this);
+            if(getServer().getPluginManager().getPlugin("JetsMinions") != null){
+                getServer().getPluginManager().registerEvents(new BlockBreakByMinion(), this);
+                getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &aSuccessfully hooked into &fJetsMinions&a."));
+            }else{
+                getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &cYou enabled JetsMinionsHook in settings, but JetsMinions is missing. Plugin is disabling. Install JetsMinions or disable the hook in settings.yml."));
+                getServer().getPluginManager().disablePlugin(this);
+            }
         }
     }
 

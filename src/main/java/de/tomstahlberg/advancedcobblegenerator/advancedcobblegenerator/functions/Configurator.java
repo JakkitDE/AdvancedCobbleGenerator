@@ -261,7 +261,9 @@ public class Configurator {
     public Boolean getIridiumHook(){
         return this.settingsConfiguration.getBoolean("hook_iridiumskyblock");
     }
-
+    public Boolean getSuperiorSkyblockHook(){
+        return Boolean.valueOf(this.settingsConfiguration.getString("hook_superiorskyblock"));
+    }
     public HashMap<UUID, Integer> loadPlayerData(){
         HashMap<UUID, Integer> playerdata = new HashMap<UUID, Integer>();
         for(String uuidString : this.playerdataConfiguration.getConfigurationSection("").getKeys(false)){
@@ -279,6 +281,9 @@ public class Configurator {
     public void checkUpdateVariables () throws IOException {
         if(this.settingsConfiguration.getString("hook_jetsminions", "") == ""){
             this.settingsConfiguration.set("hook_jetsminions", "false");
+        }
+        if(this.settingsConfiguration.getString("hook_superiorskyblock", "") == ""){
+            this.settingsConfiguration.set("hook_superiorskyblock", "false");
         }
         this.settingsConfiguration.save(this.settingsFile);
     }

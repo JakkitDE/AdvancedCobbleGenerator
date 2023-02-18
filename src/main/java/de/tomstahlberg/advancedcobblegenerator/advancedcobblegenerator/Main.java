@@ -1,5 +1,7 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator;
 
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblock;
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events.*;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.Configurator;
@@ -42,6 +44,8 @@ public final class Main extends JavaPlugin {
     public static List<Player> editorBiomeAddMode = new ArrayList<Player>();
     public static Boolean iridiumHook;
 
+    public static Boolean superiorSkyblock2Hook;
+
     public static Economy econ = null;
 
     public static FileConfiguration language;
@@ -74,6 +78,7 @@ public final class Main extends JavaPlugin {
         settings = configurator.getSettingsConfiguration();
         worldList = configurator.getWorlds();
         iridiumHook = configurator.getIridiumHook();
+        superiorSkyblock2Hook = configurator.getSuperiorSkyblockHook();
         playerdata = configurator.loadPlayerData();
         try {
             configurator.checkUpdateVariables();
@@ -92,10 +97,19 @@ public final class Main extends JavaPlugin {
         if(iridiumHook == true){
             if(getServer().getPluginManager().getPlugin("IridiumSkyblock") != null){
                 iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
-                getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
+                getServer().getPluginManager().registerEvents(new BlockFromToIridiumSkyblock(), this);
                 getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &aSuccessfully hooked into &fIridiumSkyblock&a."));
             }else{
                 getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &cYou enabled IridiumHook in settings, but IridiumSkyblock is missing. Plugin is disabling. Install IridiumSkyblock or disable the hook in settings.yml."));
+                getServer().getPluginManager().disablePlugin(this);
+            }
+
+        }else if(superiorSkyblock2Hook == true){
+            if(getServer().getPluginManager().getPlugin("SuperiorSkyblock2") != null){
+                getServer().getPluginManager().registerEvents(new BlockFromToSuperiorSkyblock(), this);
+                getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &aSuccessfully hooked into &fSuperiorSkyblock2&a."));
+            }else{
+                getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &cYou enabled SuperiorSkyblock2Hook in settings, but SuperiorSkyblock2 is missing. Plugin is disabling. Install SuperiorSkyblock2 or disable the hook in settings.yml."));
                 getServer().getPluginManager().disablePlugin(this);
             }
 

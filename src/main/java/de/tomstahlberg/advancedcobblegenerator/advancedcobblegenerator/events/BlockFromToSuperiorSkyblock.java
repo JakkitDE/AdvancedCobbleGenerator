@@ -1,22 +1,35 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events;
 
+import com.bgsoftware.superiorskyblock.api.SuperiorSkyblock;
+import com.bgsoftware.superiorskyblock.api.config.SettingsManager;
+import com.bgsoftware.superiorskyblock.api.handlers.*;
+import com.bgsoftware.superiorskyblock.api.scripts.IScriptEngine;
+import com.bgsoftware.superiorskyblock.api.world.event.WorldEventsManager;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import com.iridium.iridiumskyblock.database.Island;
-import com.iridium.iridiumskyblock.database.IslandUpgrade;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions.ConfigBasedMaterial;
 import org.bukkit.*;
-import org.bukkit.entity.Player;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.generator.BiomeProvider;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginLoader;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
-public class BlockFromTo implements Listener {
+public class BlockFromToSuperiorSkyblock implements Listener {
     @EventHandler
     public void onBlockFromTo(BlockFromToEvent event){
         if (event.getBlock().getType() == Material.WATER){
@@ -68,9 +81,7 @@ public class BlockFromTo implements Listener {
     }
 
     private Island getIsland (Location loc){
-        IridiumSkyblockAPI api = Main.iridiumSkyblockAPI;
-        Optional<Island> island = api.getIslandViaLocation(loc);
-        return island.get();
+
     }
 
     private int getCobblerLevel (Island island){

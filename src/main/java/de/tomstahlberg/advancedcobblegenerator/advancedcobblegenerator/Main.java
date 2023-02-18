@@ -38,6 +38,7 @@ public final class Main extends JavaPlugin {
     public static List<Inventory> upgradeInventoryList = new ArrayList<Inventory>();
     public static List<Inventory> editorInventoryBiomesList = new ArrayList<Inventory>();
     public static List<Inventory> editorInventoryLevelsList = new ArrayList<Inventory>();
+    public static List<Inventory> editorInventoryContentsList = new ArrayList<Inventory>();
     public static List<Player> editorBiomeAddMode = new ArrayList<Player>();
     public static Boolean iridiumHook;
 
@@ -59,6 +60,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EditorIntentoryClick(), this);
         getServer().getPluginManager().registerEvents(new PlayerChatBiomeEditor(), this);
         getServer().getPluginManager().registerEvents(new EditorInventoryLevelClick(), this);
+        getServer().getPluginManager().registerEvents(new EditorInventoryContentsClick(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
         getServer().getPluginCommand("advancedcobblegenerator").setTabCompleter(new commands());
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting v.1.2_build_02."));

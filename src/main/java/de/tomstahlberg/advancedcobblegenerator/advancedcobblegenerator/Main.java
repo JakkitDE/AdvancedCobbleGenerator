@@ -50,12 +50,7 @@ public final class Main extends JavaPlugin {
         // Plugin startup logic
         plugin = this;
         debugMode = false;
-        if(getServer().getPluginManager().getPlugin("IridiumSkyblock") != null){
-            iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
-            getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
-        }else{
-            getServer().getPluginManager().registerEvents(new BlockFromToSingle(), this);
-        }
+
 
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
@@ -85,7 +80,13 @@ public final class Main extends JavaPlugin {
         language = configurator.getLanguageConfiguration();
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fRegistered Vault successfully."));
         getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fSuccessfully started."));
-        getServer().getConsoleSender().sendMessage("IridiumHook "+iridiumHook);
+
+        if(iridiumHook == true){
+            iridiumSkyblockAPI = IridiumSkyblockAPI.getInstance();
+            getServer().getPluginManager().registerEvents(new BlockFromTo(), this);
+        }else{
+            getServer().getPluginManager().registerEvents(new BlockFromToSingle(), this);
+        }
     }
 
     @Override

@@ -79,8 +79,7 @@ public class BlockFromTo implements Listener {
     private void doDelayedBlockSet(Location loc){
         if(isOnIsland(loc) == true){
             Island island = getIsland(loc);
-            ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(island));
-            Material material = configBasedMaterial.getMaterial();
+            Material material = new ConfigBasedMaterial(loc, getCobblerLevel(island)).getMaterial();
             Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
                 public void run(){
                     loc.getBlock().setType(material);

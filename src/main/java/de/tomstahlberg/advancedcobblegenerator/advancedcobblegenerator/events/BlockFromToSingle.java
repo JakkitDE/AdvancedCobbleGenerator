@@ -60,14 +60,10 @@ public class BlockFromToSingle implements Listener {
     private void doDelayedBlockSet(Location loc){
         if(Main.cobblerBlocksBroken.containsKey(loc)){
             Player player = Main.cobblerBlocksBroken.get(loc);
-            ConfigBasedMaterial configBasedMaterial = new ConfigBasedMaterial(loc, getCobblerLevel(player));
-            Material material = configBasedMaterial.getMaterial();
+            Material material = new ConfigBasedMaterial(loc, getCobblerLevel(player)).getMaterial();
             Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
                 public void run(){
                     loc.getBlock().setType(material);
-                    if(Main.debugMode == true){
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
-                    }
                     if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
                         loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
                     }
@@ -76,6 +72,14 @@ public class BlockFromToSingle implements Listener {
                     }
                 }
             }, Main.settings.getInt("ticksPerBlockSet"));
+        }else{
+            loc.getBlock().setType(new ConfigBasedMaterial(loc, 1).getMaterial());
+            if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
+                loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
+            }
+            if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
+                loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
+            }
         }
 
     }

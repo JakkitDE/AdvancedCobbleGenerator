@@ -63,7 +63,7 @@ public class EditorIntentoryBiomesClick implements Listener {
                 ItemMeta itemMeta = itemStack.getItemMeta();
                 itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',"&e"+level));
                 List<String> lore = new ArrayList<String>();
-                for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_edit_lore")){
+                for(String loreLine : Main.configurator.getLanguageConfiguration().getStringList("editor_edit_lore")){
                     lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
                 }
                 itemMeta.setLore(lore);
@@ -83,7 +83,7 @@ public class EditorIntentoryBiomesClick implements Listener {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&',Main.configurator.getLanguageConfiguration().getString("editor_add_level_title")));
         List<String> lore = new ArrayList<String>();
-        for(String loreLine : Main.configurator.getGeneratorConfiguration().getStringList("editor_add_level_lore")){
+        for(String loreLine : Main.configurator.getLanguageConfiguration().getStringList("editor_add_level_lore")){
             lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
         }
         itemMeta.setLore(lore);
@@ -94,20 +94,9 @@ public class EditorIntentoryBiomesClick implements Listener {
     private Boolean checkIfClickedAddItem(ItemStack itemStack, Player player){
         if(itemStack != null && itemStack.hasItemMeta()){
             if(itemStack.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', Main.configurator.getLanguageConfiguration().getString("editor_add_biome_title")))){
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage("");
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&aEnter the &5biome &ainto the"));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&achat or type &5exit &ato abort."));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
+                for(String chatLine : Main.configurator.getLanguageConfiguration().getStringList("biome_add_biome_info_chat_message")){
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',chatLine));
+                }
                 return true;
             }else{
                 return false;

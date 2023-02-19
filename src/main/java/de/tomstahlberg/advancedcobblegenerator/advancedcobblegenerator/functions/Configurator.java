@@ -279,6 +279,32 @@ public class Configurator {
             editor_item_edit.add("&7Q/DROP to delete.");
             configuration.set("editor_item_edit_lore", editor_item_edit);
 
+            List<String> biome_added_successfully_chat_message = new ArrayList<String>();
+            biome_added_successfully_chat_message.add("&e--------------------");
+            biome_added_successfully_chat_message.add("&aBiome added successfully.");
+            biome_added_successfully_chat_message.add("&e--------------------");
+            configuration.set("biome_added_successfully_chat_message", biome_added_successfully_chat_message);
+
+            List<String> biome_add_aborted_chat_message = new ArrayList<String>();
+            biome_add_aborted_chat_message.add("&e--------------------");
+            biome_add_aborted_chat_message.add("&cAborted.");
+            biome_add_aborted_chat_message.add("&e--------------------");
+            configuration.set("biome_add_aborted_chat_message", biome_add_aborted_chat_message);
+
+            List<String> biome_add_invalid_biome_chat_message = new ArrayList<String>();
+            biome_add_invalid_biome_chat_message.add("&e--------------------");
+            biome_add_invalid_biome_chat_message.add("&cBiome is not valid! Try");
+            biome_add_invalid_biome_chat_message.add("&cagain or type &5exit &cto abort.");
+            biome_add_invalid_biome_chat_message.add("&e--------------------");
+            configuration.set("biome_add_invalid_biome_chat_message", biome_add_invalid_biome_chat_message);
+
+            List<String> biome_add_biome_info_chat_message = new ArrayList<String>();
+            biome_add_biome_info_chat_message.add("&e--------------------");
+            biome_add_biome_info_chat_message.add("&aEnter the &5biome &ainto the");
+            biome_add_biome_info_chat_message.add("&achat or type &5exit &ato abort.");
+            biome_add_biome_info_chat_message.add("&e--------------------");
+            configuration.set("biome_add_biome_info_chat_message", biome_add_biome_info_chat_message);
+
             configuration.save(this.languageFile);
         }
     }

@@ -1,6 +1,7 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.events;
 
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,19 +33,9 @@ public class PlayerChatBiomeEditor implements Listener {
                 if(Biome.valueOf(event.getMessage().toUpperCase()) != null){
                     Biome biome = Biome.valueOf((event.getMessage().toUpperCase()));
                     Main.editorBiomeAddMode.remove(player);
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&aBiome added successfully."));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
+                    for(String chatLine : Main.configurator.getLanguageConfiguration().getStringList("biome_added_successfully_chat_message")){
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',chatLine));
+                    }
                     List<Material> materialList = new ArrayList<Material>();
                     materialList.add(Material.STONE);
                     HashMap<Integer, List<Material>> level = new HashMap<Integer, List<Material>>();
@@ -60,34 +51,13 @@ public class PlayerChatBiomeEditor implements Listener {
             }catch(Exception e){
                 if(event.getMessage().equalsIgnoreCase("exit")){
                     Main.editorBiomeAddMode.remove(player);
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cAborted."));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
+                    for(String chatLine : Main.configurator.getLanguageConfiguration().getStringList("biome_add_aborted_chat_message")){
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',chatLine));
+                    }
                 }else{
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage("");
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cBiome is not valid! Try"));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&cagain or type &5exit &cto abort."));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e--------------------"));
+                    for(String chatLine : Main.configurator.getLanguageConfiguration().getStringList("biome_add_invalid_biome_chat_message")){
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',chatLine));
+                    }
                 }
             }
         }
@@ -103,7 +73,7 @@ public class PlayerChatBiomeEditor implements Listener {
     }
     private void setupInventory(){
         Inventory inventory;
-        inventory = Bukkit.createInventory(this.player, 54, ChatColor.translateAlternateColorCodes('&',"&eEditor - Biom"));
+        inventory = Bukkit.createInventory(this.player, 54, ChatColor.translateAlternateColorCodes('&',"&eBiomes"));
 
         int i = 0;
         for(ItemStack itemStack : getBiomeList()){
@@ -121,10 +91,11 @@ public class PlayerChatBiomeEditor implements Listener {
     private ItemStack getAddBiomeItem(){
         ItemStack itemStack = new ItemStack(Material.GREEN_BANNER);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&aAdd Biome"));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Main.configurator.getLanguageConfiguration().getString("editor_add_biome_title")));
         List<String> lore = new ArrayList<String>();
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2Click to add a"));
-        lore.add(ChatColor.translateAlternateColorCodes('&',"&2new biome."));
+        for(String loreLine : Main.configurator.getLanguageConfiguration().getStringList("editor_add_biome_lore")){
+            lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+        }
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
@@ -137,8 +108,9 @@ public class PlayerChatBiomeEditor implements Listener {
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&e&l"+biomeString));
             List<String> lore = new ArrayList<String>();
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&2Leftclick, to setup"));
-            lore.add(ChatColor.translateAlternateColorCodes('&',"&2this biome."));
+            for(String loreLine : Main.configurator.getLanguageConfiguration().getStringList("editor_edit_lore")){
+                lore.add(ChatColor.translateAlternateColorCodes('&',loreLine));
+            }
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
             biomeList.add(itemStack);

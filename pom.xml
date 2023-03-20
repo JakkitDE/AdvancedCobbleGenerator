@@ -6,7 +6,7 @@
 
     <groupId>de.tomstahlberg.advancedcobblegenerator</groupId>
     <artifactId>advancedcobblegenerator</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Advancedcobblegenerator</name>
@@ -75,13 +75,8 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
+            <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.iridium</groupId>
-            <artifactId>IridiumSkyblock</artifactId>
-            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
@@ -94,21 +89,21 @@
             <artifactId>JetsMinions</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/JetsMinions-7.7.3.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/JetsMinions-7.7.5.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.local</groupId>
             <artifactId>Iridium</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/IridiumSkyblock-4.0.0-b6.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/IridiumSkyblock-3.2.10-hotfix-1.2.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.local</groupId>
             <artifactId>SuperiorSkyblock</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/SuperiorSkyblock2.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/SuperiorSkyblock2-2022.9-b981.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

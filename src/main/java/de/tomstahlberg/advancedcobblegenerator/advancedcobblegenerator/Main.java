@@ -67,7 +67,7 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EditorInventoryContentsClick(), this);
         getServer().getPluginCommand("advancedcobblegenerator").setExecutor(new commands());
         getServer().getPluginCommand("advancedcobblegenerator").setTabCompleter(new commands());
-        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting v.1.2_build_02."));
+        getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &fPlugin is starting v.1.2.2."));
         try {
             configurator = new Configurator();
         } catch (IOException e) {

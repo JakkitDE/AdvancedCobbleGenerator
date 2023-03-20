@@ -1,15 +1,13 @@
 package de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.functions;
 
 import de.tomstahlberg.advancedcobblegenerator.advancedcobblegenerator.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ConfigBasedMaterial {
     //private HashMap<Biome, HashMap<Integer, List<Material>>> generatorMap;
@@ -29,14 +27,17 @@ public class ConfigBasedMaterial {
                 "biomes."+biomeString+"."+upgradeLevel
         ).getKeys(false)){
             try{
-                materialList.add(Material.valueOf(materialString));
+                int chance = Main.configurator.getGeneratorConfiguration().getInt("biomes."+biomeString+"."+upgradeLevel+"."+materialString);
+                for(int i = 0;i<chance;i++){
+                    materialList.add(Material.valueOf(materialString));
+                }
             }catch (Exception e){
                 Main.plugin.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"&aACG &e-> &c"+biomeString+"."+upgradeLevel+"."+materialString+" is no material."));
             }
         }
+        //Collections.shuffle(materialList);
         Integer pick = getRandomInteger(0, materialList.size() - 1);
         this.material = materialList.get(pick);
-
     }
 
     public Material getMaterial (){
@@ -44,7 +45,7 @@ public class ConfigBasedMaterial {
     }
 
     private Integer getRandomInteger(int min, int max){
-        Random random = new Random();
-        return random.nextInt(max + 1 - min) + min;
+        int range = Math.abs(max - min) + 1;
+        return (int) (Math.random() * range) + (min <= max ? min : max);
     }
 }

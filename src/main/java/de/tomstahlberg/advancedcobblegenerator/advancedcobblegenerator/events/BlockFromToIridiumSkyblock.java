@@ -82,7 +82,7 @@ public class BlockFromToIridiumSkyblock implements Listener {
                         island.getOwner().getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lACG &f-> &aBlock set."));
                     }
                     if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
-                        loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1, 1);
+                        loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 0.2F, 1.0F);
                     }
                     if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
                         loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);

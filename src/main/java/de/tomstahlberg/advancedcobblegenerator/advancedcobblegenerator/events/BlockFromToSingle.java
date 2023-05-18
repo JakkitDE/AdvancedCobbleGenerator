@@ -65,7 +65,7 @@ public class BlockFromToSingle implements Listener {
                 public void run(){
                     loc.getBlock().setType(material);
                     if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
-                        loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
+                        loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 0.2F, 1.0F);
                     }
                     if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
                         loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
@@ -75,7 +75,7 @@ public class BlockFromToSingle implements Listener {
         }else{
             loc.getBlock().setType(new ConfigBasedMaterial(loc, 1).getMaterial());
             if(!(Main.settings.getString("cobble_generator_sound").equalsIgnoreCase("none"))){
-                loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 1.0f, 1.0f);
+                loc.getWorld().playSound(loc, Sound.valueOf(Main.settings.getString("cobble_generator_sound")), 0.2F, 1.0F);
             }
             if(!(Main.settings.getString("cobble_generator_effect").equalsIgnoreCase("none"))){
                 loc.getWorld().playEffect(loc, Effect.valueOf(Main.settings.getString("cobble_generator_effect")), 1);
